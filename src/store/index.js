@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Top from 'components/Common/top'
+import layui from 'layui'
 
 Vue.use(Vuex)
 

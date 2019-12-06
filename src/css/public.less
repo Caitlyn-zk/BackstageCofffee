@@ -5,6 +5,7 @@
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
+	font-size: 12px;
 }
 a {
 	text-decoration: none;
@@ -99,4 +100,13 @@ li {
 }
 .text-align-c {
 	text-align: center;
+}
+// 行高封装
+// 行高 12px - 36px
+.line-height(30, 6);
+.line-height(@n, @i, @size: @i * 2) when (@i <= @n) {
+  .line-@{size} {
+    line-height: @i * 2px;
+  }
+  .line-height(@n, (@i + 1))
 }
