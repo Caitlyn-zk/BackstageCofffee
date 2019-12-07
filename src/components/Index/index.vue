@@ -1,7 +1,11 @@
 <template>
-  <div id="app">
-			<router-view></router-view>
-  </div>
+		<div class="layui-layout layui-layout-admin">
+			<Top></Top>
+			<Left></Left>
+			<!-- 内容主体区域 -->
+			<ContentBody></ContentBody>
+			<Footer></Footer>
+		</div>
 </template>
 
 <script>
@@ -20,6 +24,12 @@ export default {
 		Left,
 		ContentBody,
 		Footer
+	},
+	created () {
+		window.layui.use('element', function () {
+			var element = window.layui.element
+			console.log(element)
+		})
 	}
 }
 </script>

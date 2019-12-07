@@ -5,6 +5,8 @@
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
+}
+body {
 	font-size: 12px;
 }
 a {
@@ -76,7 +78,7 @@ li {
 	.distance(@count, @i+1);
 }
 // 12 14 16 18  font9 n6
-.font-sizes(9,6);
+.font-sizes(20,6);
 .font-sizes(@font, @n, @size: 2 * @n) when (@n <= @font) {
 	.font-@{size} {
 		font-size: @size * 1px
