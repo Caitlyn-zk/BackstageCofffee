@@ -11,6 +11,7 @@ let query = (sql, data) => {
           if (!error) {
             resolve(result)
           } else {
+            console.log(error)
             console.log('数据库连接失败')
             reject(result)
           }

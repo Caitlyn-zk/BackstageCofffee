@@ -19,6 +19,21 @@ const  backLogin = async (data) => {
   return result
 }
 /**
+ * 后台找回密码，向数据库查找验证码
+ * @param {String} data 'email'
+ */
+const isbackCode = async (data) => {
+  let sql = 'select * from retrievepwd where email = ? order by createTime desc'
+  let result = query(sql, data).then((data) => {
+    if (data.length > 0) {
+      return data[0]     
+    } else {
+      return false
+    }
+  })
+  return result
+}
+/**
  * 后台找回密码判断用户是否存在
  * @param {String} data 'email'
  */
@@ -40,7 +55,7 @@ const backisAdm = async (data) => {
  * @param {arr} data ['邮箱', '验证码'] 
  */
 const backRetrieve = async (data) => {
-  let sql = 'insert into retrievePwd values(null,?,?)'
+  let sql = 'insert into retrievepwd values(null,?,?)'
   let result = await query(sql, data).then((data) => {
     if(data.length > 0) {
       return data[0]
@@ -54,11 +69,11 @@ const backRetrieve = async (data) => {
  * 
  * @param {arr} data ['邮箱','密码'] 
  */
-const backupdata = async (data) => {
+const backupdate = async (data) => {
   let sql = ' UPDATE administrator SET PASSWORD = ? WHERE email = ?'
-  let result = query(sql, data).then((data) => {
-    if(data.length > 0) {
-      return data[0]
+  let result =await query(sql, data).then((data) => {
+    if (data) {
+      return true
     } else {
       return false
     }
@@ -69,5 +84,6 @@ module.exports = {
   backLogin,
   backRetrieve,
   backisAdm,
-  backupdata
+  backupdate,
+  isbackCode
 }

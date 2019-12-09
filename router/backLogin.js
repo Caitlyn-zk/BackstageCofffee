@@ -3,10 +3,10 @@ let md5 = require('md5')
 let query = require('../control/data/data')
 let sendEmail = require('../control/email')
 let common = require('../common/common')
-// 找回密码
+// 找回密码发送验证
 const backRetrieve = async (req, res) => {
   let email = req.body.email || req.query.email
-  if(!email) {
+  if(!email || !common.variEmail(email)) {
     return res.json({
       status: 500,
       message: '请输入正确的信息'
@@ -28,7 +28,7 @@ const backRetrieve = async (req, res) => {
     if (!resultS) {
       return res.json({
         status: 501,
-        message: '验证码获取失败'
+        message: '验证码发送失败'
       })
     } else {
       res.json({
@@ -42,8 +42,15 @@ const backRetrieve = async (req, res) => {
 // 修改密码
 const backupdate = async (req, res) => {
   let email = req.body.email || req.query.email
+  let variCode = req.body.variCode || req.query.email
   let password = req.body.password || req.query.password
-  if(!email) {
+  if (!email || !common.variEmail(email)) {
+    return res.json({
+      status: 500,
+      message: '请输入正确的信息'
+    })
+  }
+  if (!variCode) {
     return res.json({
       status: 500,
       message: '请输入正确的信息'
@@ -55,19 +62,22 @@ const backupdate = async (req, res) => {
       message: '请输入正确的信息'
     })
   }
-  password = md5(password)
-  let arr = [email, password]
-  let result = await query.backupdata(arr)
-  if (!result) {
-    return res.json({
-      status:502,
-      message: '修改密码失败'
-    })
-  } else {
-    res.json ({
-      status: 200,
-      message: '修改密码成功'
-    })
+  let vResult = await query.isbackCode(email)
+  if (vResult.veriCode === variCode) {
+    password = md5(password)
+    let arr = [password ,email]
+    let result = await query.backupdate(arr)
+    if (!result) {
+      return res.json({
+        status:502,
+        message: '修改密码失败'
+      })
+    } else {
+      res.json ({
+        status: 200,
+        message: '修改密码成功'
+      })
+    }
   }
 }
 // 登陆的回调函数
@@ -89,7 +99,6 @@ const backLogin =async (req, res) => {
   }
   password = md5(password)
   let arr = [user,password]
-  console.log(arr)
   let result = await query.backLogin(arr)
   if (result.length > 0) {
     res.json({
@@ -107,8 +116,25 @@ const backLogin =async (req, res) => {
     })
   }
 }
+// 验证登陆
+const backIslogin = (req,res) => {
+  let token = req.body.token || req.query.token
+  jwt.verify(token, 'password', (err,decode) => {
+    if(!err) {
+      res.json({
+        status:200
+      })
+    } else {
+      res.json ({
+        status: 503,
+        message: '登陆已失效'
+      })
+    }
+  })
+}
 module.exports = {
   backLogin,
   backRetrieve,
-  backupdate
+  backupdate,
+  backIslogin
 }
