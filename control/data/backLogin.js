@@ -55,7 +55,7 @@ const backisAdm = async (data) => {
  * @param {arr} data ['邮箱', '验证码'] 
  */
 const backRetrieve = async (data) => {
-  let sql = 'insert into retrievepwd values(null,?,?)'
+  let sql = 'insert into retrievePwd values(null,?,?)'
   let result = await query(sql, data).then((data) => {
     if(data.length > 0) {
       return data[0]
@@ -69,11 +69,12 @@ const backRetrieve = async (data) => {
  * 
  * @param {arr} data ['邮箱','密码'] 
  */
-const backupdate = async (data) => {
+
+const backupdata = async (data) => {
   let sql = ' UPDATE administrator SET PASSWORD = ? WHERE email = ?'
-  let result =await query(sql, data).then((data) => {
-    if (data) {
-      return true
+  let result = query(sql, data).then((data) => {
+    if(data.length > 0) {
+      return data[0]
     } else {
       return false
     }

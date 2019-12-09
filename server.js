@@ -25,6 +25,7 @@ app.post('/islogin', router.islogin)
 app.post('/changeInfor', router.changeInfor)
 // app.post('/variCode', router.variCode)
 // app.post('/pwdUpdate', router.pwdUpdate) 
+
 // 端口监听
 app.listen(3000,() => {
   console.log('port: 3000')

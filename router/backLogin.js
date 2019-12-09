@@ -28,7 +28,7 @@ const backRetrieve = async (req, res) => {
     if (!resultS) {
       return res.json({
         status: 501,
-        message: '验证码发送失败'
+        message: '验证码获取失败'
       })
     } else {
       res.json({
@@ -65,8 +65,8 @@ const backupdate = async (req, res) => {
   let vResult = await query.isbackCode(email)
   if (vResult.veriCode === variCode) {
     password = md5(password)
-    let arr = [password ,email]
-    let result = await query.backupdate(arr)
+    let arr = [email, password]
+    let result = await query.backupdata(arr)
     if (!result) {
       return res.json({
         status:502,
@@ -78,7 +78,7 @@ const backupdate = async (req, res) => {
         message: '修改密码成功'
       })
     }
-  }
+  }  
 }
 // 登陆的回调函数
 const backLogin =async (req, res) => {
@@ -99,6 +99,7 @@ const backLogin =async (req, res) => {
   }
   password = md5(password)
   let arr = [user,password]
+  console.log(arr)
   let result = await query.backLogin(arr)
   if (result.length > 0) {
     res.json({
