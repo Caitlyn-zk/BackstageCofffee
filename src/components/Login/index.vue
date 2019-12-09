@@ -17,13 +17,13 @@
 						</div>
 					</div>
 				</div>
-				<div>
+				<div class="text-align-l margin-l-35 padding-l-35">
 					<input type="checkbox" name="" title="记住密码" lay-skin="primary" />
 					<span><router-link to="retrieveps">找回密码</router-link></span>
 				</div>
 				<div class="layui-form-item">
 					<div class="layui-input-block">
-						<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+						<button class="layui-btn" lay-submit @click="formlogin" lay-filter="formDemo">立即提交</button>
 					</div>
 				</div>
 			</form>
@@ -32,16 +32,36 @@
 </template>
 
 <script>
+import {loginRequest} from 'commonjs/Requestaxios'
  export default {
-    created () {
-      window.layui.use('form', function () {
-				var form = window.layui.form
-				// 监听提交
-				form.on('submit(formDemo)', function (data) {
-					window.layer.msg(JSON.stringify(data.field))
-					return false
-				})
+	data () {
+		return {
+		}
+	},
+	created () {
+		window.layui.use('form', function () {
+			var form = window.layui.form
+			// 监听提交
+			form.on('submit(formDemo)', function (data) {
+				// window.layer.msg(JSON.stringify(data.field))
+				let logindata = JSON.stringify(data.field)
+				window.localStorage.setItem('token', logindata)
+				this.$router.push('/')
+				return false
 			})
+		})
+	},
+	methods: {
+		formlogin (formname) {
+			console.log(123)
+			console.log(formname.value)
+			// loginRequest({
+			// 	data: {
+			// 		mobile: this.user.username,
+			// 		password: this.user.password
+			// 	}
+			// })
+		}
 	}
 }
 </script>

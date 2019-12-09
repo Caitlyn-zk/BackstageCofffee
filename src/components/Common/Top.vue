@@ -32,7 +32,7 @@
 		</ul>
 		<!-- 没有登录时 -->
 		<ul class="layui-nav layui-layout-right" v-else>
-			<li class="layui-nav-item"><router-link to="/login">登录</router-link></li>
+			<li class="layui-nav-item"><router-link to="/login">前往登陆登录</router-link></li>
 			<li class="layui-nav-item"><a href="">注册</a></li>
 		</ul>
 	</div>
@@ -42,7 +42,7 @@
 export default {
 	data () {
 		return {
-			login: false
+			login: true
 		}
 	}
 }

@@ -11,7 +11,7 @@
 <script>
 import Top from 'components/Common/Top'
 import Left from 'components/Common/Left'
-import ContentBody from 'components/contentBody'
+import ContentBody from 'components/contentBody/index.vue'
 import Footer from 'components/Common/footer'
 export default {
 	name: 'App',

@@ -44,12 +44,81 @@
 				}
 			}
 			.layui-form-label {
+				width: 110px;
+			}
+		}
+		.layui-form-item {
+			.layui-input-inline {
+				width: 230px;
+			}
+			.layui-input-block {
+				margin-top: 30px;
+				margin-left: 0;
+				& button {
+					width: 200px;
+					background: rgb(55, 78, 36);
+				}
+			}
+		}
+		.layui-form-checkbox {
+			& span {
+				color: rgb(49, 42, 3);
+				margin-right: 120px;
+			}
+		}
+	}
+}
+// 找回密码
+.nps-retrieveps-main {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	color: aliceblue;
+	width: 100%;
+	height: 100%;
+	background: url(../image/coffee-ol_L.jpg);
+	.nps-login-main-bar {
+		padding: 20px;
+		position: absolute;
+		width: 500px;
+		top: 50%;
+		left: 50%;
+		margin-top: -200px;
+		margin-left: -250px;
+		height: 500px;
+		opacity: .8;
+		color: rgb(49, 42, 3);
+		// 八卦阵，准备
+		background-color:rgba(168, 153, 134, 0.993) ;
+		border-color: rgb(121, 83, 7);
+		border-style: solid;
+		border-width: 2px 2px 98px 2px;
+		border-radius: 100%;
+		.layui-inline {
+			font-size: 14px;
+			margin-bottom: 30px;
+			& input {
+				background: none;
+				border-color: transparent;
+				color: #fff;
+				border-bottom: 1px solid rgb(110, 88, 88);
+				&::placeholder {
+					color: rgb(49, 42, 3);
+				}
+				&:hover, &:focus{
+					border: none;
+					border-bottom: 1px solid #000;
+				}
+			}
+			.layui-form-label {
 				width: 130px;
 			}
 		}
 		.layui-form-item {
 			.layui-input-inline {
-				width: 260px;
+				width: 230px;
 			}
 			.layui-input-block {
 				margin-top: 30px;
