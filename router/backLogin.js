@@ -15,7 +15,7 @@ const backRetrieve = async (req, res) => {
   let result = await query.backisAdm(email)
   if(!result) {
     return res.json({
-      status: 502,
+      status: 507,
       message: '用户不存在'
     })
   } else {
@@ -82,8 +82,10 @@ const backupdate = async (req, res) => {
 }
 // 登陆的回调函数
 const backLogin =async (req, res) => {
-  let user = req.body.name || req.query.name
+  let user = req.body.email || req.query.email
   let password = req.body.password || req.query.password
+  console.log(user)
+  console.log(password)
   let token = jwt.sign({password:password},'password',{expiresIn: 60*30})
   if(!user) {
     return res.json({
@@ -99,9 +101,8 @@ const backLogin =async (req, res) => {
   }
   password = md5(password)
   let arr = [user,password]
-  console.log(arr)
   let result = await query.backLogin(arr)
-  if (result.length > 0) {
+  if (result) {
     res.json({
       status: 200,
       message: '登陆成功',
@@ -112,7 +113,7 @@ const backLogin =async (req, res) => {
     })
   } else {
     res.json ({
-      status: 501,
+      status: 500,
       message: '用户名或密码错误'
     })
   }

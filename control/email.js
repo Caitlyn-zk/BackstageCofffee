@@ -8,10 +8,8 @@ function send(mail){
     transporter.sendMail(mail, function(error, info){
       if(error) {
         reject(error)
-        console.log(1111)
           return console.log(error);
       } else {
-        console.log(1111)
       }
       console.log('mail sent:', info.response);
     })

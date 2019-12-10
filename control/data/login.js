@@ -53,7 +53,7 @@ const login = async (data) => {
  */
 const changeinfor = async (data) => {
   let sql = 'update user set surname=?, name=?, distributeclass=?, title=?, location=?, address=?, city=?, postCode=?, phone=?, shippingNotes=? where email=?'
-  let result = query(sql, data).then((data) => {
+  let result =await query(sql, data).then((data) => {
     if (data) {
       return true 
     } else {

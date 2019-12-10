@@ -4,7 +4,7 @@ let query = require('../mysql')
  * @param {arr} data ['用户名','密码']
  */
 const  backLogin = async (data) => {
-  let sql = 'select * from administrator where nickname=? && password=?'
+  let sql = 'select * from administrator where email=? && password=?'
   let result = await query(sql, data).then((data) => {
     if (data.length > 0) {
       return data[0]     
@@ -55,10 +55,11 @@ const backisAdm = async (data) => {
  * @param {arr} data ['邮箱', '验证码'] 
  */
 const backRetrieve = async (data) => {
-  let sql = 'insert into retrievePwd values(null,?,?)'
+  let sql = 'insert into retrievepwd(email, veriCode) values(?,?)'
   let result = await query(sql, data).then((data) => {
-    if(data.length > 0) {
-      return data[0]
+    console.log(data)
+    if(data) {
+      return true
     } else {
       return false
     }
@@ -70,7 +71,7 @@ const backRetrieve = async (data) => {
  * @param {arr} data ['邮箱','密码'] 
  */
 
-const backupdata = async (data) => {
+const backupdate = async (data) => {
   let sql = ' UPDATE administrator SET PASSWORD = ? WHERE email = ?'
   let result = query(sql, data).then((data) => {
     if(data.length > 0) {

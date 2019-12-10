@@ -43,6 +43,7 @@ const register = async (req, res) => {
   let language = req.body.language || req.query.language
   let shippingNotes = req.body.shippingNotes || req.shippingNotes
   let deliveryAddress = req.body.deliveryAddress || req.query.deliveryAddress
+  let subscription = req.body.subscription || req.query.subscription
   password = md5(password)
   let arr = [surname, name, email, password, distributeclass, title, location, address,
     city, postCode, phone, language, shippingNotes, deliveryAddress, subscription]
@@ -135,7 +136,7 @@ const login = async (req, res) => {
     })
   } else {
     return res.json({
-      status: 501,
+      status: 500,
       message: '用户名或密码错误'
     })
   }
@@ -165,18 +166,19 @@ const pwdUpdate = async (req,res) => {
       message: '请输入正确的信息'
     })
   }
-  let result = data.isRegisted(email)  
+  let result =await data.isRegisted(email)  
   if(result) {
     res.json({
-      status: 506,
+      status: 507,
       message: '该账户不存在'
     })
   } else {
-    sendEmail(email, '你最帅！')
-    res.json({
+    sendemail(email, '你最帅！')
+    return res.json({
       status: 200,
       message: '找回成功'
     })
+    
   }
 
 
