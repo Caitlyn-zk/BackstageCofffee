@@ -4,18 +4,30 @@ import axios from 'axios'
 import { api } from './api'
 import qs from 'qs'
 
-axios.defaults.baseURL = api
-
+// axios.defaults.baseURL = api
+// 请求拦截
+axios.interceptors.request.use(function (config) {
+	let token = window.localStorage.getItem('token')
+	if (token) {
+		config.headers['token'] = token
+	}
+	console.log(config)
+	return config
+}, function (error) {
+		return error
+})
 // 封装直接post，get 请求都能发送请求的方法
 let axiosRequest = function (url, method = 'get', data = {}) {
+	console.log(data)
+	console.log(qs.stringify(data))
 	return new Promise((resolve, reject) => {
 		axios({
-			url: '',
+			url: api + url,
 			method: method,
 			// 用于post请求 qs.stringify(data)序列化对象转换为字符串
-			data: qs.stringify(data),
+			data: data,
 			// get请求
-			params: data
+			params: qs.stringify(data)
 		}).then((res) => {
 			// 请求成功，resolve返回后台数据
 			resolve(res.data)
@@ -25,7 +37,6 @@ let axiosRequest = function (url, method = 'get', data = {}) {
 		})
 	})
 }
-
 // get post 分开
 let get = function (url, data) {
 	return new Promise((resolve, reject) => {

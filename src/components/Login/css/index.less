@@ -30,75 +30,9 @@
 		.layui-inline {
 			font-size: 14px;
 			margin-bottom: 30px;
-			& input {
-				background: none;
-				border-color: transparent;
-				color: #fff;
-				border-bottom: 1px solid rgb(110, 88, 88);
-				&::placeholder {
-					color: rgb(49, 42, 3);
-				}
-				&:hover, &:focus{
-					border: none;
-					border-bottom: 1px solid #000;
-				}
+			&.nps-repassword {
+				margin-bottom: 0;	
 			}
-			.layui-form-label {
-				width: 110px;
-			}
-		}
-		.layui-form-item {
-			.layui-input-inline {
-				width: 230px;
-			}
-			.layui-input-block {
-				margin-top: 30px;
-				margin-left: 0;
-				& button {
-					width: 200px;
-					background: rgb(55, 78, 36);
-				}
-			}
-		}
-		.layui-form-checkbox {
-			& span {
-				color: rgb(49, 42, 3);
-				margin-right: 120px;
-			}
-		}
-	}
-}
-// 找回密码
-.nps-retrieveps-main {
-	position: fixed;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	color: aliceblue;
-	width: 100%;
-	height: 100%;
-	background: url(../image/coffee-ol_L.jpg);
-	.nps-login-main-bar {
-		padding: 20px;
-		position: absolute;
-		width: 500px;
-		top: 50%;
-		left: 50%;
-		margin-top: -200px;
-		margin-left: -250px;
-		height: 500px;
-		opacity: .8;
-		color: rgb(49, 42, 3);
-		// 八卦阵，准备
-		background-color:rgba(168, 153, 134, 0.993) ;
-		border-color: rgb(121, 83, 7);
-		border-style: solid;
-		border-width: 2px 2px 98px 2px;
-		border-radius: 100%;
-		.layui-inline {
-			font-size: 14px;
-			margin-bottom: 30px;
 			& input {
 				background: none;
 				border-color: transparent;
@@ -119,11 +53,12 @@
 		.layui-form-item {
 			.layui-input-inline {
 				width: 230px;
+				
 			}
 			.layui-input-block {
 				margin-top: 30px;
 				margin-left: 0;
-				& button {
+				& .layui-btn {
 					width: 200px;
 					background: rgb(55, 78, 36);
 				}
@@ -137,13 +72,37 @@
 		}
 	}
 }
+.layui-unselect {
+	&.layui-form-checkbox {
+		&.layui-form-checked {
+			display: none;
+		}
+	}
+}
+.el-checkbox {
+	margin-left: 50px;
+	&.is-checked {
+		.el-checkbox__input {
+			&.is-checked {
+				.el-checkbox__inner {
+					background-color: #105707;
+					border-color: rgb(5, 39, 16);
+				}
+			}
+		}
+		.el-checkbox__label {
+			color: rgb(5, 39, 16);
+		}
+	}
+}
+
 .layui-layer-move {
 	background: rgb(83, 71, 71);
 }
 .nps-retrieveps-but {
 	position: absolute;
 	right: 0;
-	background: rgb(36, 32, 8);
+	background: rgb(2, 92, 21);
 	opacity: .5;
 	cursor: pointer;
 	border: 1px solid #000;
@@ -151,6 +110,12 @@
 	color: rgb(233, 142, 31);
 	padding: 5px 7px;
 	top: 1px;
+	&.get-code {
+		background: #343534;
+		color: #fff;
+		cursor: not-allowed;
+		pointer-events: none;
+	}
 }
 
 
