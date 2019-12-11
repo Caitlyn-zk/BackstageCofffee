@@ -3,7 +3,12 @@
 			<Top></Top>
 			<Left></Left>
 			<!-- 内容主体区域 -->
-			<ContentBody></ContentBody>
+			<div class="layui-body">
+				<!-- 内容主体区域 -->
+				<div style="padding: 15px;padding-right: 0px;padding-bottom: 0px; height: 100%;">
+					<router-view></router-view>
+				</div>
+			</div>
 			<Footer></Footer>
 		</div>
 </template>
@@ -11,7 +16,7 @@
 <script>
 import Top from 'components/Common/Top'
 import Left from 'components/Common/Left'
-import ContentBody from 'components/contentBody/index.vue'
+// import ContentBody from 'components/contentBody/index.vue'
 import Footer from 'components/Common/footer'
 export default {
 	name: 'App',
@@ -22,7 +27,7 @@ export default {
 	components: {
 		Top,
 		Left,
-		ContentBody,
+		// ContentBody,
 		Footer
 	},
 	created () {

@@ -5,6 +5,7 @@ import Login from 'components/Login'
 import Retrieveps from 'components/Login/retrieveps'
 import User from 'components/contentBody/user'
 import Home from 'components/contentBody/home'
+import bodyIndex from 'components/contentBody/index'
 
 Vue.use(Router)
 
@@ -12,20 +13,23 @@ export default new Router({
   routes: [
     {
       path: '/',
-			name: 'Index',
-			component: Index,
+			name: 'home',
+			components: {
+				default: Home,
+				Index: Index
+			},
 			meta: {
 				requireUser: 1
 			},
 			children: [{
-				path: 'home',
-				component: Home,
-				meta: {
-					requireUser: false
-				}
-			}, {
 					path: 'user',
 					component: User,
+					meta: {
+						requireUser: false
+					}
+			}, {
+					path: 'bodyindex',
+					component: bodyIndex,
 					meta: {
 						requireUser: false
 					}
@@ -54,3 +58,10 @@ export default new Router({
 		}
   ]
 })
+// {
+// 	path: 'home',
+// 		component: Home,
+// 			meta: {
+// 		requireUser: false
+// 	}
+// }, 

@@ -9,7 +9,9 @@ let mutations = {
 	},
 	changeCode(state, data) {
 		state.info = data.info
-		state.token = data.code
+	},
+	changeUpdata(state, data) {
+		state.info = data.info
 	}
 }
 

@@ -1,14 +1,12 @@
 <template>
   <div id="app">
-			<router-view></router-view>
+		<router-view name="Index"></router-view>
+		<router-view></router-view>
   </div>
 </template>
 
 <script>
-import Top from 'components/Common/Top'
-import Left from 'components/Common/Left'
-import ContentBody from 'components/contentBody'
-import Footer from 'components/Common/footer'
+import Index from 'components/Index'
 export default {
 	name: 'App',
 	data () {
@@ -16,10 +14,7 @@ export default {
 		}
 	},
 	components: {
-		Top,
-		Left,
-		ContentBody,
-		Footer
+		Index
 	}
 }
 </script>

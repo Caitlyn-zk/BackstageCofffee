@@ -11,4 +11,7 @@ export default {
 </script>
 
 <style>
+.layui-layout-admin .layui-footer {
+	z-index: 11;
+}
 </style>

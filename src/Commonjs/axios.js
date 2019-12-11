@@ -11,15 +11,15 @@ axios.interceptors.request.use(function (config) {
 	if (token) {
 		config.headers['token'] = token
 	}
-	console.log(config)
+	// console.log(config)
 	return config
 }, function (error) {
 		return error
 })
 // 封装直接post，get 请求都能发送请求的方法
 let axiosRequest = function (url, method = 'get', data = {}) {
-	console.log(data)
-	console.log(qs.stringify(data))
+	// console.log(data)
+	// console.log(qs.stringify(data))
 	return new Promise((resolve, reject) => {
 		axios({
 			url: api + url,

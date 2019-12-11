@@ -16,12 +16,23 @@ let loginRequest = (params) => {
 	}).catch((error) => {
 		params.error(error)
 	})
+}
+let codeRequest = (params) => {
 	axiosRequest('backRetrieve', 'post', params.data).then(function (res) {
 		params.success(res)
 	}).catch((error) => {
 		params.error(error)
 	})
 }
+let retrieveRequest = (params) => {
+	axiosRequest('backupdate', 'post', params.data).then(function (res) {
+		params.success(res)
+	}).catch((error) => {
+		params.error(error)
+	})
+}
 export {
-	loginRequest
+	loginRequest,
+	codeRequest,
+	retrieveRequest
 }

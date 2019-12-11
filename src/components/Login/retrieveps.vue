@@ -7,14 +7,14 @@
 					<div class="layui-inline">
 						<label class="layui-form-label">请输入邮箱：</label>
 						<div class="layui-input-inline" prop="username">
-							<input type="text" v-model="loginForm.username" name="email" lay-verify="email" placeholder="请输入邮箱" autocomplete="off" class="layui-input"/>
+							<input type="text" v-model="loginForm.username" name="email" lay-verify="email|Codeemal" placeholder="请输入邮箱" autocomplete="off" class="layui-input"/>
 						</div>
 					</div>
 					<div class="layui-inline">
 						<label class="layui-form-label">请输入验证码：</label>
 						<div class="layui-input-inline" prop="code" >
 							<input type="text" name="code" v-model="loginForm.code" lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input"/>
-							<a @click="countDown()" type="button"  class="nps-retrieveps-but fl">获取验证码</a>
+							<a @click="countDown()" type="button" :loading="loginLoading" class="nps-retrieveps-but fl">获取验证码</a>
 						</div>
 					</div>
 					<div class="layui-inline">
@@ -32,7 +32,7 @@
 				</div>
 				<div class="layui-form-item">
 					<div class="layui-input-block">
-						<a class="layui-btn" @click="formRetrieveps()" :loading="loginLoading" lay-submit lay-filter="formDemo">立即提交</a>
+						<a class="layui-btn" @click="formRetrieveps(loginForm)" :loading="loginLoading" lay-submit lay-filter="formDemo">立即提交</a>
 					</div>
 				</div>
 			</form>
@@ -41,14 +41,14 @@
 </template>
 
 <script>
-import {loginRequest} from 'commonjs/Requestaxios'
+import {codeRequest, retrieveRequest} from 'commonjs/Requestaxios'
  export default {
 	data () {
 		return {
 			loginLoading: true,
 			loginForm: {
 				username: '',
-				passwrod: '',
+				password: '',
 				code: ''
 			}
 		}
@@ -60,8 +60,8 @@ import {loginRequest} from 'commonjs/Requestaxios'
 			var code = window.document.getElementsByClassName('nps-retrieveps-but')
 			// let codehtml = count + 's后重新获取'
 			code[0].classList.add('get-code')
-			// ajax封装的使用
-			loginRequest({
+			// ajax封装的使用 验证码
+			codeRequest({
 				data: {
 					email: this.loginForm.username
 					// password: this.loginForm.password,
@@ -78,7 +78,7 @@ import {loginRequest} from 'commonjs/Requestaxios'
 						// 存入vuex中
 						this.$store.commit('changeCode', res.data)
 						this.$message({
-							message: '验证码发送成功',
+							message: '验证码发送成功,如果没收到，请在60秒后重新发送',
 							showClose: true,
 							duration: 2000,
 							onClose: () => {
@@ -110,7 +110,9 @@ import {loginRequest} from 'commonjs/Requestaxios'
 				}
 			}, 1000)
 		},
+		// 找回密码
 		formRetrieveps (formname) {
+			console.log(formname)
 			var pass = document.getElementsByClassName('nps-password')
 			console.log(pass.pass.value)
 			window.layui.use('form', () => {
@@ -128,14 +130,15 @@ import {loginRequest} from 'commonjs/Requestaxios'
 				})
 				// 监听提交
 				form.on('submit(formDemo)', (data) => {
+					console.log(data)
 					// window.layer.msg(JSON.stringify(data.field))
 					let pass = data.field.password
 					// let repass = data.field.repassword
-					loginRequest({
+					retrieveRequest({
 						data: {
 							email: this.loginForm.username,
 							password: this.loginForm.password,
-							code: this.loginForm.code
+							variCode: this.loginForm.code
 						},
 						error: () => {
 							this.loginLoading = false
@@ -145,7 +148,7 @@ import {loginRequest} from 'commonjs/Requestaxios'
 							this.loginLoading = false
 							if (res.status === 200) {
 								// 存入vuex中
-								this.$store.commit('changeCode', res.data)
+								this.$store.commit('changeUpdata', res.data)
 								this.$message({
 									message: '密码成功找回，3s后返回登录',
 									showClose: true,
@@ -164,7 +167,8 @@ import {loginRequest} from 'commonjs/Requestaxios'
 							}
 						}
 					})
-					console.log(pass)
+					console.log(data)
+					// 阻止表单跳转
 					return false
 				})
 			})
