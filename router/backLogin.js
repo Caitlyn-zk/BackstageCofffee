@@ -42,7 +42,8 @@ const backRetrieve = async (req, res) => {
 // 修改密码
 const backupdate = async (req, res) => {
   let email = req.body.email || req.query.email
-  let variCode = req.body.variCode || req.query.email
+  let variCode = req.body.variCode || req.query.variCode
+  console.log('传的验证码',variCode)
   let password = req.body.password || req.query.password
   if (!email || !common.variEmail(email)) {
     return res.json({
@@ -65,8 +66,8 @@ const backupdate = async (req, res) => {
   let vResult = await query.isbackCode(email)
   if (vResult.veriCode === variCode) {
     password = md5(password)
-    let arr = [email, password]
-    let result = await query.backupdata(arr)
+    let arr = [password, email]
+    let result = await query.backupdate(arr)
     if (!result) {
       return res.json({
         status:502,
@@ -78,14 +79,17 @@ const backupdate = async (req, res) => {
         message: '修改密码成功'
       })
     }
+  } else {
+    return res.json({
+      status: 500,
+      message: '请输入正确的信息'
+    })
   }  
 }
 // 登陆的回调函数
 const backLogin =async (req, res) => {
   let user = req.body.email || req.query.email
   let password = req.body.password || req.query.password
-  console.log(user)
-  console.log(password)
   let token = jwt.sign({password:password},'password',{expiresIn: 60*30})
   if(!user) {
     return res.json({
@@ -102,6 +106,8 @@ const backLogin =async (req, res) => {
   password = md5(password)
   let arr = [user,password]
   let result = await query.backLogin(arr)
+  console.log('在登陆接口')
+  console.log(result)
   if (result) {
     res.json({
       status: 200,

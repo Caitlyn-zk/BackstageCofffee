@@ -74,8 +74,8 @@ const backRetrieve = async (data) => {
 const backupdate = async (data) => {
   let sql = ' UPDATE administrator SET PASSWORD = ? WHERE email = ?'
   let result = query(sql, data).then((data) => {
-    if(data.length > 0) {
-      return data[0]
+    if(data) {
+      return true
     } else {
       return false
     }

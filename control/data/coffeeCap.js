@@ -1,9 +1,24 @@
 // 咖啡胶囊的数据操作
 let query = require('../mysql')
+
+let getCoffCapLists = async () => {
+  let sql = 'select * from coffeeCapsule order by createTime desc'
+  let result = await query(sql).then((data) => {
+    if(data.length > 0) {
+      return data
+    } else {
+      return false 
+    }
+  })
+  return result
+}
 /**
  * 分页获取咖啡胶囊的数据
  * @param {*} data  [start count]
  */
+
+// 咖啡胶囊的筛选
+
 let getCoffeeCapList =async (data) => {
   let sql = 'select * from coffeeCapsule order by createTime desc limit ?, ?'
   let result = await query(sql, data).then((data) => {
@@ -240,7 +255,94 @@ let getCoffByStrengthAromaCapamount =async  (data) => {
   })
   return result    
 }
+
+// 咖啡胶囊的删除
+let deleteCoffCap = async (data) => {
+  let sql = 'delete from  coffeeCapsule where id =?'
+  let result = query(sql, data).then((data) => {
+    if (data) {
+      return true
+    } else {
+      return false
+    }
+  })
+  return result    
+}
+
+// 咖啡胶囊的新增
+let addCoffcap = async (data) => {
+  let sql = 'insert into coffeeCapsule(classification, name, title,  img, description, bakingDescription, placefOrigin, strength, capAmount, aroma, acidity, bitterness, alcohol, degreeofBaking, coffeeClassification, price, discountPrice, taste) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+  let result = query(sql,data).then((data) => {
+    if (data) {
+      return true
+    } else {
+      return false
+    }
+  })
+  return result    
+}
+/**
+ *  咖啡胶囊的修改
+ * classification,NAME,title, img,description,bakingDescription=?,placefOrigin=?, strength capAmount aroma acidity bitterness alcohol degreeofBaking coffeeClassification price discountPrice taste id
+ * @param {arr} data 
+ */
+let updateCoffCap = async (data) => {
+  let sql = 'update coffeeCapsule set classification=?, NAME=?, title=?,  img=?, description=?, bakingDescription=?, placefOrigin=?, strength=?, capAmount=?, aroma=?, acidity=?, bitterness=?, alcohol=?, degreeofBaking=?, coffeeClassification=?, price=?, discountPrice=?, taste=? where id=?'
+  let result = query(sql,data).then((data) => {
+    if (data) {
+      return true
+    } else {
+      return false
+    }
+  })
+  return result    
+}
+/**
+ * 获取商品分类
+ */
+let getgoodsClass = async () => {
+  let sql = 'select * from classification'
+  let result = query(sql).then((data) => {
+    if (data) {
+      return data
+    } else {
+      return false
+    }
+  })
+  return result
+}
+/**
+ * 获取咖啡胶囊杯量
+ */
+let getCooffCapamount = async () => {
+  let sql = 'select * from capAmount'
+  let result = query(sql).then((data) => {
+    if (data) {
+      return data
+    } else {
+      return false
+    }
+  })
+  return result
+}
+/**
+ * 获取咖啡胶囊香调aroma
+ */
+let getCooffCaparoma = async () => {
+  let sql = 'select * from aroma'
+  let result = query(sql).then((data) => {
+    if (data) {
+      return data
+    } else {
+      return false
+    }
+  })
+  return result
+}
+
+
 module.exports = {
+  getCoffCapLists,
   getCoffeeCapList,
   getCoffeeCapByClass,
   getCoffeeCapByStrength,
@@ -256,5 +358,8 @@ module.exports = {
   getCoffByClassStrengthCapamount,
   getCoffByClassAromaCapamount,
   getCoffByClassStrengthAromaCapamount,
-  getCoffByStrengthAromaCapamount
+  getCoffByStrengthAromaCapamount,
+  deleteCoffCap,
+  addCoffcap,
+  updateCoffCap
 }

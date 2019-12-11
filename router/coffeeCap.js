@@ -1,6 +1,34 @@
 // 咖啡胶囊的回调函数
+let multer = require('multer')
 let common = require('../common/common')
 let data = require('../control/data/data')
+
+// 配置 multer
+var Storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null,'./static/coffeeCap')
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname)
+  }
+})
+var upload = multer({ storage: Storage }).array("img", 5); 
+// 获取咖啡胶囊列表
+let getCoffgCapLists = async (req, res) => {
+  let result = await data.getCoffCapLists()
+  if (result) {
+    res.json({
+      status: 200,
+      data:result,
+      message: '获取商品成功'
+    })
+  } else {
+    res.json({
+      status: 509,
+      message: '信息获取失败'
+    })
+  }
+}
 // 分页获取咖啡胶囊商品列表
 let getcoffeeCap = async (req,res) => {
   let page = req.body.page || req.query.page
@@ -118,18 +146,128 @@ let coffFilter = async (req,res) => {
     })
   }
 }
-// 按咖啡强度查询 
-// let getCoffeeCapByStrength = async (req, res) => {
-//   let strength = req.body.strength || req.query.strength
-//   if (!strength) {
-//     return res.json({
-//       status: 500,
-//       message: '请输入强度'
-//     })
-//   }
+// 添加咖啡胶囊商品
+let addcoffCap = async (req, res) => {
+  upload(req, res,async function(err) {
+    if (err) {
+      return res.json({
+        status: 508,
+        message: '文件上传错误'
+      })
+    } else {
+      let classification = Number(req.body.classification || req.query.classification)
+      let name = req.body.name || req.query.name
+      let title = req.body.title || req.query.title
+      let description = req.body.description || req.query.description
+      let bakingDescription = req.body.bakingDescription || req.query.bakingDescription
+      let placefOrigin = req.body.placefOrigin || req.query.placefOrigin
+      let strength = Number(req.body.strength || req.query.strength)
+      let capAmount = Number(req.body.capAmount || req.query.capAmount)
+      let aroma = Number(req.body.aroma || req.query.aroma)
+      let acidity = Number(req.body.acidity || req.query.acidity)
+      let bitterness = Number(req.body.bitterness || req.query.bitterness)
+      let alcohol = Number(req.body.alcohol || req.query.alcohol)
+      let degreeofBaking = Number(req.body.degreeofBaking || req.query.degreeofBaking)
+      let coffeeClassification = Number(req.body.coffeeClassification || req.query.coffeeClassification)
+      let price = req.body.price || req.query.price
+      let discountPrice = req.body.discountPrice || req.query.discountPrice
+      let taste = req.body.taste || req.query.taste
+      let img = []
+      for (item of req.files) {
+        img.push(item.filename)
+      }
+      img = JSON.stringify(img)
+      let arr = [classification, name, title, img, description, bakingDescription, placefOrigin, strength, capAmount, aroma, acidity, bitterness, alcohol, degreeofBaking, coffeeClassification, price, discountPrice, taste]
+      common.isempty(res,arr)
+      let result =await data.addCoffcap(arr)
+      if (result) {
+        res.json({
+          status: 200,
+          message: '添加咖啡胶囊成功'
+        })
+      } else {
+        res.json({
+          status: 500,
+          message: '添加咖啡胶囊失败'
+        })
+      }
+    }
+  })
+}
+// 修改咖啡胶囊商品
+let updatecoffCap = async (req, res) => {
+  upload(req, res,async function(err) {
+    if (err) {
+      return res.json({
+        status: 508,
+        message: '文件上传错误'
+      })
+    } else {
+      let id = Number(req.body.id || req.query.id)
+      let classification = Number(req.body.classification || req.query.classification)
+      let name = req.body.name || req.query.name
+      let title = req.body.title || req.query.title
+      let description = req.body.description || req.query.description
+      let bakingDescription = req.body.bakingDescription || req.query.bakingDescription
+      let placefOrigin = req.body.placefOrigin || req.query.placefOrigin
+      let strength = Number(req.body.strength || req.query.strength)
+      let capAmount = Number(req.body.capAmount || req.query.capAmount)
+      let aroma = Number(req.body.aroma || req.query.aroma)
+      let acidity = Number(req.body.acidity || req.query.acidity)
+      let bitterness = Number(req.body.bitterness || req.query.bitterness)
+      let alcohol = Number(req.body.alcohol || req.query.alcohol)
+      let degreeofBaking = Number(req.body.degreeofBaking || req.query.degreeofBaking)
+      let coffeeClassification = Number(req.body.coffeeClassification || req.query.coffeeClassification)
+      let price = req.body.price || req.query.price
+      let discountPrice = req.body.discountPrice || req.query.discountPrice
+      let taste = req.body.taste || req.query.taste
+      let img = req.files[0].filename
+      let arr = [classification, name, title, img, description, bakingDescription, placefOrigin, strength, capAmount, aroma, acidity, bitterness, alcohol, degreeofBaking, coffeeClassification, price, discountPrice, taste, id]
+      common.isempty(res,arr)
+      let result =await data.updateCoffCap(arr)
+      if (result) {
+        res.json({
+          status: 200,
+          message: '修改咖啡胶囊成功'
+        })
+      } else {
+        res.json({
+          status: 500,
+          message: '修改咖啡胶囊失败'
+        })
+      }
+    }
+  })
+}
+// 删除咖啡胶囊商品
+let deletecoffCap = async (req, res) => {
+  let id = Number(req.body.id || req.query)
+  if (!id) {
+    return res.json({
+      status:500,
+      message: '请输入id'
+    })
+  }
+  let result = await data.deleteCoffCap(id)
+  if (result) {
+    res.json({
+      status: 200,
+      message: '删除成功'
+    })
+  } else {
+    res.json({
+      status: 500,
+      message: '删除失败'
+    })
+  }
+  
 
-// }
+}
 module.exports = {
+  getCoffgCapLists,
   getcoffeeCap,
-  coffFilter
+  coffFilter,
+  addcoffCap,
+  updatecoffCap,
+  deletecoffCap
 }

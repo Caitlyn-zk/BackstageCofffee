@@ -23,11 +23,15 @@ app.post('/register', router.register)
 app.post('/login', router.login)
 app.post('/islogin', router.islogin)
 app.post('/changeInfor', router.changeInfor)
-app.post('/pwdUpdate', router.pwdUpdate) 
+app.post('/pwdUpdate', router.pwdUpdate)
 
 // 咖啡胶囊的接口
 app.post('/getcoffeeCap', router.getcoffeeCap)
-app.post('/coffFilter',router.coffFilter)
+app.post('/getCoffgCapLists',router.getCoffgCapLists)
+app.post('/coffFilter', router.coffFilter)
+app.post('/addCoffcap', router.addcoffCap)
+app.post('/updatecoffCap', router.updatecoffCap)
+app.post('/deletecoffCap', router.deletecoffCap)
 // 端口监听
 app.listen(3000,() => {
   console.log('port: 3000')
