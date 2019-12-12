@@ -132,7 +132,7 @@ import {codeRequest, retrieveRequest} from 'commonjs/Requestaxios'
 				form.on('submit(formDemo)', (data) => {
 					console.log(data)
 					// window.layer.msg(JSON.stringify(data.field))
-					let pass = data.field.password
+					// let pass = data.field.password
 					// let repass = data.field.repassword
 					retrieveRequest({
 						data: {

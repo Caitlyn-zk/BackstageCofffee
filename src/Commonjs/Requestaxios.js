@@ -10,6 +10,7 @@ import { axiosRequest, get, post } from './axios'
 // 		params.error(error)
 // 	})
 // }
+// 登录
 let loginRequest = (params) => {
 	axiosRequest('backLogin', 'post', params.data).then(function (res) {
 		params.success(res)
@@ -17,6 +18,7 @@ let loginRequest = (params) => {
 		params.error(error)
 	})
 }
+// 验证码
 let codeRequest = (params) => {
 	axiosRequest('backRetrieve', 'post', params.data).then(function (res) {
 		params.success(res)
@@ -24,8 +26,17 @@ let codeRequest = (params) => {
 		params.error(error)
 	})
 }
+// 找回密码
 let retrieveRequest = (params) => {
 	axiosRequest('backupdate', 'post', params.data).then(function (res) {
+		params.success(res)
+	}).catch((error) => {
+		params.error(error)
+	})
+}
+// 发布商品
+let goodsRequest = (params) => {
+	axiosRequest('getCoffgCapLists', 'post', params.data).then(function (res) {
 		params.success(res)
 	}).catch((error) => {
 		params.error(error)
@@ -34,5 +45,6 @@ let retrieveRequest = (params) => {
 export {
 	loginRequest,
 	codeRequest,
-	retrieveRequest
+	retrieveRequest,
+	goodsRequest
 }
