@@ -5,10 +5,10 @@ let multer = require('multer')
 // 配置 multer
 var Storage = multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null,'./static/coffeeMachine')
+    callback(null,'./static/')
   },
   filename: function (req, file, callback) {
-    callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname)
+    callback(null, 'coffeeMachine/'+file.fieldname + "_" + Date.now() + "_" + file.originalname)
   }
 })
 var upload = multer({ storage: Storage }).array("coffeeMachineimg", 5); 

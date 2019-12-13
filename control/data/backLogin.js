@@ -9,9 +9,7 @@ const  backLogin = async (data) => {
     if (data.length > 0) {
       return data[0]     
     } else {
-      return {
-        message: '数据不存在'
-      }
+      return false
     }
   }).catch((err) => {
     return err

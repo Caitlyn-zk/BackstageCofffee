@@ -46,6 +46,8 @@ app.post('/deleteCoffeeMachine',router.deleteCoffeeMachine)
 app.post('/getspecifications',router.getspecifications)
 app.post('/getcMachineClass',router.getcMachineClass)
 
+// 添加订单
+app.post('/addUserOrder',router.addUserOrder)
 // 端口监听
 app.listen(3000,() => {
   console.log('port: 3000')

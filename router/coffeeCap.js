@@ -6,10 +6,10 @@ let data = require('../control/data/data')
 // 配置 multer
 var Storage = multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null,'./static/coffeeCap')
+    callback(null,'./static/')
   },
   filename: function (req, file, callback) {
-    callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname)
+    callback(null, 'coffeeCap/'+file.fieldname + "_" + Date.now() + "_" + file.originalname)
   }
 })
 var upload = multer({ storage: Storage }).array("img", 5); 
@@ -180,6 +180,7 @@ let addcoffCap = async (req, res) => {
       let arr = [classification, name, title, img, description, bakingDescription, placefOrigin, strength, capAmount, aroma, acidity, bitterness, alcohol, degreeofBaking, coffeeClassification, price, discountPrice, taste]
       common.isempty(res,arr)
       let result =await data.addCoffcap(arr)
+      console.log(result)
       if (result) {
         res.json({
           status: 200,
