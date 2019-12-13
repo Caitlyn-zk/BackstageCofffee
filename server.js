@@ -32,6 +32,20 @@ app.post('/coffFilter', router.coffFilter)
 app.post('/addCoffcap', router.addcoffCap)
 app.post('/updatecoffCap', router.updatecoffCap)
 app.post('/deletecoffCap', router.deletecoffCap)
+app.post('/getgoodsClass',router.getgoodsClass)
+app.post('/getCoffCapamount',router.getCoffCapamount)
+app.post('/getCoffCaparoma',router.getCoffCaparoma)
+app.post('/getCoffCapClassification',router.getCoffCapClassification)
+
+// 咖啡机的接口
+app.post('/getCoffeeMachineLists',router.getCoffeeMachineLists)
+app.post('/getCoffeeMachineBypage',router.getCoffeeMachineBypage)
+app.post('/addCoffeeMachine',router.addCoffeeMachine)
+app.post('/updateCoffeeMachine',router.updateCoffeeMachine)
+app.post('/deleteCoffeeMachine',router.deleteCoffeeMachine)
+app.post('/getspecifications',router.getspecifications)
+app.post('/getcMachineClass',router.getcMachineClass)
+
 // 端口监听
 app.listen(3000,() => {
   console.log('port: 3000')

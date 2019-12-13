@@ -263,11 +263,79 @@ let deletecoffCap = async (req, res) => {
   
 
 }
+// 获取商品分类
+let getgoodsClass = async (req,res) => {
+  let result = await data.getgoodsClass()
+  if(result) {
+    res.json({
+      status: 200,
+      data: result,
+      message: '获取商品分类成功'
+    })
+  } else {
+    res.json({
+      status: 508,
+      message: '获取商品分类失败'
+    })
+  }
+}
+// 获取咖啡胶囊的杯量
+let getCoffCapamount = async (req, res) => {
+  let result =await data.getCoffCapamount()
+  if(result) {
+    res.json({
+      status: 200,
+      data: result,
+      message: '获取咖啡杯量成功'
+    })
+  } else {
+    res.json({
+      status: 508,
+      message: '获取咖啡杯量失败'
+    })
+  }
+}
+// 获取咖啡香调
+let getCoffCaparoma = async (req,res) => {
+  let result = await data.getCoffCaparoma()
+  if(result) {
+    res.json({
+      status: 200,
+      data: result,
+      message: '获取香调成功'
+    })
+  } else {
+    res.json({
+      status: 508,
+      message: '获取咖啡香调失败'
+    })
+  }
+}
+// 获取咖啡的分类
+let getCoffCapClassification = async (req, res) => {
+  let result = await data.getCoffCapClassification()
+  if(result) {
+    res.json({
+      status: 200,
+      data: result,
+      message: '获取咖啡的分类'
+    })
+  } else {
+    res.json({
+      status: 508,
+      message: '获取咖啡分类失败'
+    })
+  }
+}
 module.exports = {
   getCoffgCapLists,
   getcoffeeCap,
   coffFilter,
   addcoffCap,
   updatecoffCap,
-  deletecoffCap
+  deletecoffCap,
+  getgoodsClass,
+  getCoffCapamount,
+  getCoffCaparoma,
+  getCoffCapClassification
 }

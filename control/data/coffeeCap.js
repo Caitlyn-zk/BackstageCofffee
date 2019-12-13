@@ -2,7 +2,7 @@
 let query = require('../mysql')
 
 let getCoffCapLists = async () => {
-  let sql = 'select * from coffeeCapsule order by createTime desc'
+  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`id` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`id` order by createTime desc'
   let result = await query(sql).then((data) => {
     if(data.length > 0) {
       return data
@@ -20,7 +20,7 @@ let getCoffCapLists = async () => {
 // 咖啡胶囊的筛选
 
 let getCoffeeCapList =async (data) => {
-  let sql = 'select * from coffeeCapsule order by createTime desc limit ?, ?'
+  let sql = 'SELECT * FROM coffeeCapsule cCap LEFT JOIN aroma ON  cCap.aroma=aroma.`id` LEFT JOIN fragrance ON aroma.fragrance = fragrance.`id` order by createTime desc limit ?, ?'
   let result = await query(sql, data).then((data) => {
     if(data.length > 0) {
       return data
@@ -301,7 +301,7 @@ let updateCoffCap = async (data) => {
  * 获取商品分类
  */
 let getgoodsClass = async () => {
-  let sql = 'select * from classification'
+  let sql = 'select * from npscommodity'
   let result = query(sql).then((data) => {
     if (data) {
       return data
@@ -314,7 +314,7 @@ let getgoodsClass = async () => {
 /**
  * 获取咖啡胶囊杯量
  */
-let getCooffCapamount = async () => {
+let getCoffCapamount = async () => {
   let sql = 'select * from capAmount'
   let result = query(sql).then((data) => {
     if (data) {
@@ -328,7 +328,7 @@ let getCooffCapamount = async () => {
 /**
  * 获取咖啡胶囊香调aroma
  */
-let getCooffCaparoma = async () => {
+let getCoffCaparoma = async () => {
   let sql = 'select * from aroma'
   let result = query(sql).then((data) => {
     if (data) {
@@ -339,7 +339,20 @@ let getCooffCaparoma = async () => {
   })
   return result
 }
-
+/**
+ * 获取咖啡胶囊 的分类
+ */
+let getCoffCapClassification = async () => {
+  let sql = 'select * from coffeeclassification'
+  let result = query(sql).then((data) => {
+    if (data) {
+      return data
+    } else {
+      return false
+    }
+  })
+  return result  
+}
 
 module.exports = {
   getCoffCapLists,
@@ -361,5 +374,9 @@ module.exports = {
   getCoffByStrengthAromaCapamount,
   deleteCoffCap,
   addCoffcap,
-  updateCoffCap
+  updateCoffCap,
+  getgoodsClass,
+  getCoffCapamount,
+  getCoffCaparoma,
+  getCoffCapClassification
 }
