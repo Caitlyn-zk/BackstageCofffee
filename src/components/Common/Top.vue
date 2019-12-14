@@ -21,14 +21,14 @@
 			<li class="layui-nav-item">
 				<a href="javascript:;">
 					<img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-					咖啡大师
+					{{name}}
 				</a>
 				<dl class="layui-nav-child">
 					<dd><a href="">基本资料</a></dd>
 					<dd><a href="">安全设置</a></dd>
 				</dl>
 			</li>
-			<li class="layui-nav-item"><a href="">退出登录</a></li>
+			<li class="layui-nav-item"><a href="javascript:;" @click="Signout">退出登录</a></li>
 		</ul>
 		<!-- 没有登录时 -->
 		<ul class="layui-nav layui-layout-right" v-else>
@@ -42,7 +42,32 @@
 export default {
 	data () {
 		return {
-			login: true
+			login: true,
+			infotable: '',
+			name: '',
+			token: ''
+		}
+	},
+	watch: {
+		'$store.state.login.info' () {
+			// console.log($store.state)
+			this.infotable = this.$store.state.login.info
+		},
+		'$store.state.login.token' () {
+			this.token = this.$store.state.login.token
+		}
+	},
+	created () {
+		let data = localStorage.getItem('info')
+		let dataobj = JSON.parse(data)
+		let nickname = 'nickname'
+		this.name = dataobj[nickname]
+	},
+	methods: {
+		Signout () {
+			window.localStorage.removeItem('token')
+			window.localStorage.removeItem('info')
+			window.location.reload()
 		}
 	}
 }

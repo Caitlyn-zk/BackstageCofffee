@@ -5,15 +5,15 @@
 			<ul class="layui-nav layui-nav-tree"  lay-filter="test">
 				<li class="layui-nav-item"><router-link to="/">首页</router-link></li>
 				<li class="layui-nav-item">
-					<a href="javascript:;">解决方案</a>
+					<a href="javascript:;">发布商品</a>
 					<dl class="layui-nav-child">
-						<dd><a href="javascript:;">列表一</a></dd>
-						<dd><a href="javascript:;">列表二</a></dd>
+						<dd><router-link to="/bodyindex">咖啡胶囊</router-link></dd>
+						<dd><a href="javascript:;">咖啡</a></dd>
 						<dd><a href="">超链接</a></dd>
 					</dl>
 				</li>
 				<li class="layui-nav-item"><router-link to="/user">买家地址</router-link></li>
-				<li class="layui-nav-item"><router-link to="/bodyindex">发布商品</router-link></li>
+				<li class="layui-nav-item"><router-link to="/">另外的表</router-link></li>
 				<li class="layui-nav-item"><router-link to="/">用户信息</router-link></li>
 					<li class="layui-nav-item layui-nav-itemed">
 					<a class="" href="javascript:;">系统管理</a>

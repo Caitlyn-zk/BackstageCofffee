@@ -87,9 +87,10 @@ import {loginRequest} from 'commonjs/Requestaxios'
 							if (res.status === 200) {
 								// 存放token
 								window.localStorage.setItem('token', logindata)
-								window.localStorage.setItem('userinfo', JSON.stringify(res.data.userinfo))
-								console.log(JSON.stringify(res.data.userinfo))
+								window.localStorage.setItem('info', JSON.stringify(res.data.info))
+								console.log(JSON.stringify(res.data.info))
 								// 存入vuex中
+								// console.log(res.data)
 								this.$store.commit('changeUser', res.data)
 								this.$message({
 									message: '登录成功',

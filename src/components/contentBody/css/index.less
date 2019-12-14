@@ -15,3 +15,37 @@
 		width: 100%;
 	}
 }
+// 添加按钮
+.nps-table-title-add {
+	height: 55px;
+	padding: 5px;
+	background: #fdf3f3;
+	border: #f5ebeb;
+	.el-button:hover, .el-button:focus {
+		color: #fff;
+		border-color: GREY;
+		background-color: rgb(143, 106, 106);
+	}
+}
+// 弹出框
+.el-dialog__wrapper {
+	.el-dialog__body {
+		max-height: 400px;
+		overflow-y: scroll;
+		margin-right: 10px;
+		/* 滚动条 */
+		&::-webkit-scrollbar { /*滚动条整体样式*/
+		    width: 8px; /*高宽分别对应横竖滚动条的尺寸*/
+		    height: 1px;
+		}
+		&::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+		    border-radius: 5px;
+		    border: 5px solid rgba(129, 114, 114, 0.2);
+		    box-shadow: 5px 0 0 #378AE8 inset;
+		}
+		&::-webkit-scrollbar-thumb:hover {
+		    box-shadow: 5px 0 0 #4A4A4A inset;
+		}
+
+	}
+}

@@ -10,21 +10,61 @@
 				height="90%"
 				style="width: 100%">
 				<el-table-column
-				prop="date"
-				label="日期"
-				width="150">
+				prop="id"
+				label="序号"
+				width="50">
+				</el-table-column>
+				<el-table-column
+				prop="surname"
+				label="姓"
+				width="60">
+				</el-table-column>
+				<el-table-column
+					prop="name"
+					label="名字"
+					width="100">
+				</el-table-column>
+				<el-table-column
+				prop="email"
+				label="电子邮件"
+				width="100">
+				</el-table-column>
+				<el-table-column
+				prop="distributeclass"
+				label="经销商"
+				width="100">
+				</el-table-column>
+				<el-table-column
+				prop="address"
+				label="收货地址"
+				width="100">
+				</el-table-column>
+				<el-table-column
+				prop="distributeclass"
+				label="经销商"
+				width="100">
+				</el-table-column>
+				<el-table-column
+				prop="language"
+				label="语言"
+				width="100">
+				</el-table-column>
+				<el-table-column
+				prop="shippingNotes"
+				label="装运通知单"
+				width="100">
+				</el-table-column>
+				<el-table-column
+				prop="subscription"
+				label="订阅"
+				width="100">
 				</el-table-column>
 				<el-table-column label="配送信息">
-					<el-table-column
-						prop="name"
-						label="姓名"
-						width="120">
-					</el-table-column>
 					<el-table-column label="地址">
 						<el-table-column
-							prop="province"
-							label="省份"
-							width="120">
+						prop="city"
+						label="城市"
+						width="100">
 						</el-table-column>
 						<el-table-column
 							prop="city"
@@ -32,14 +72,19 @@
 							width="120">
 						</el-table-column>
 						<el-table-column
-							prop="address"
-							label="地址"
-							width="300">
+						prop="deliveryAddress"
+						label="详细送货地址"
+						width="100">
 						</el-table-column>
 						<el-table-column
-							prop="zip"
-							label="邮编"
-							width="120">
+						prop="phone"
+						label="电话"
+						width="100">
+						</el-table-column>
+						<el-table-column
+						prop="postCode"
+						label="邮政编码"
+						width="100">
 						</el-table-column>
 					</el-table-column>
 					<el-table-column
@@ -53,45 +98,12 @@
 								size="small">
 								移除
 							</el-button>
-							<el-button type="text" size="small">编辑</el-button>
+							<el-button type="text" size="small">查看</el-button>
 						</template>
 					</el-table-column>
 				</el-table-column>
 			</el-table>
 		</div>
-		<!-- 弹框 -->
-		<!-- <el-dialog title="添加收货地址" append-to-body :visible.sync="dialogFormVisible">
-			<el-form :model="form">
-				<el-form-item label="日期" :label-width="formLabelWidth">
-					<el-input v-model="form.name" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="姓名" :label-width="formLabelWidth">
-					<el-input v-model="form.name" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="省份" :label-width="formLabelWidth">
-					<el-select
-						v-model="value"
-						multiple
-						filterable
-						remote
-						reserve-keyword
-						placeholder="请输入关键词"
-						:remote-method="remoteMethod"
-						:loading="loading">
-						<el-option
-							v-for="item in options"
-							:key="item.value"
-							:label="item.label"
-							:value="item.value">
-						</el-option>
-					</el-select>
-				</el-form-item>
-			</el-form>
-			<div slot="footer" class="dialog-footer">
-				<el-button @click="dialogFormVisible = false">取 消</el-button>
-				<el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-			</div>
-		</el-dialog> -->
 	</div>
 </template>
 
@@ -99,23 +111,7 @@
 export default {
 	data () {
 		return {
-			tableData: [{
-				date: '2016-05-02',
-				name: '王小虎',
-				address: '上海市普陀区金沙江路 1518 弄'
-			}, {
-				date: '2016-05-04',
-				name: '王小虎',
-				address: '上海市普陀区金沙江路 1517 弄'
-			}, {
-				date: '2016-05-01',
-				name: '王小虎',
-				address: '上海市普陀区金沙江路 1519 弄'
-			}, {
-				date: '2016-05-03',
-				name: '王小虎',
-				address: '上海市普陀区金沙江路 1516 弄'
-			}]
+			tableData: []
 		}
 	},
 	methods: {

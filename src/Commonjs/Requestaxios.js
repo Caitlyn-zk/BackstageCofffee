@@ -1,7 +1,8 @@
 // 集中发送ajax的地方
 // 所有ajax发送的地方
 // import Vue from 'vue'
-import { axiosRequest, get, post } from './axios'
+// import { axiosRequest, get, post } from './axios'
+import { axiosRequest } from './axios'
 // 登录请求 params是一个对象，包含该data
 // let loginRequest = (params) => {
 // 	Vue.$request('login', 'post', params.data).then((res) => {
@@ -42,9 +43,23 @@ let goodsRequest = (params) => {
 		params.error(error)
 	})
 }
+// 添加商品
+let addGoodsRequest = (params) => {
+	axiosRequest('addCoffcap', 'post', params.data, {
+		headers: { "Content-Type": "multipart/form-data" }
+	}).then(function (res) {
+		params.success(res)
+		console.log(res)
+		console.log('res: ', res)
+	}).catch((error) => {
+		console.log(error)
+		params.error(error)
+	})
+}
 export {
 	loginRequest,
 	codeRequest,
 	retrieveRequest,
-	goodsRequest
+	goodsRequest,
+	addGoodsRequest
 }

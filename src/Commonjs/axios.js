@@ -17,7 +17,7 @@ axios.interceptors.request.use(function (config) {
 		return error
 })
 // 封装直接post，get 请求都能发送请求的方法
-let axiosRequest = function (url, method = 'get', data = {}) {
+let axiosRequest = function (url, method = 'get', data = {}, config = {}) {
 	// console.log(data)
 	// console.log(qs.stringify(data))
 	return new Promise((resolve, reject) => {
@@ -27,7 +27,8 @@ let axiosRequest = function (url, method = 'get', data = {}) {
 			// 用于post请求 qs.stringify(data)序列化对象转换为字符串
 			data: data,
 			// get请求
-			params: qs.stringify(data)
+			params: qs.stringify(data),
+			headers: config
 		}).then((res) => {
 			// 请求成功，resolve返回后台数据
 			resolve(res.data)
