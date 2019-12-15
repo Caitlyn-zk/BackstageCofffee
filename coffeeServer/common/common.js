@@ -1,7 +1,7 @@
 // 公共方法的封装
 
 // 导入sdk环境
-const AlipaySDK = require('alipay-sdk')
+const AlipaySDK = require('alipay-sdk').default
 const config = require('../config/config')
 // 实例化对象
 let alipay = new AlipaySDK(config.alipayConfig)

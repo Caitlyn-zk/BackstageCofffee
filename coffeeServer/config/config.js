@@ -26,6 +26,7 @@ let appPrivateKey = fs.readFileSync(path.join(__dirname,'../sendbox_pem/private_
 let alipayPublicKey = fs.readFileSync(path.join(__dirname,'../sendbox_pem/public_alipay.txt'),'utf-8')
 const alipayConfig = {
   appId: '2016101500692746',
+  privateKey: appPrivateKey,
   alipayPublicKey: alipayPublicKey,
   getway: 'https://openapi.alipaydev.com/gateway.do',
   charset: 'utf-8',
