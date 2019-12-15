@@ -173,6 +173,13 @@ let addcoffCap = async (req, res) => {
       let discountPrice = req.body.discountPrice || req.query.discountPrice
       let taste = req.body.taste || req.query.taste
       let img = []
+      console.log(classification)
+      console.log(name)
+      console.log(title)
+      console.log(description)
+      console.log(bakingDescription)
+      console.log(bitterness)
+      console.log(req.files)
       for (item of req.files) {
         img.push(item.filename)
       }

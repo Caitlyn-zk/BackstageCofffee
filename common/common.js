@@ -1,4 +1,13 @@
 // 公共方法的封装
+
+// 导入sdk环境
+const AlipaySDK = require('alipay-sdk')
+const config = require('../config/config')
+// 实例化对象
+let alipay = new AlipaySDK(config.alipayConfig)
+// PC支付接口 alipay.trade.page.pay 返回的内容为 表单
+let AlipayFormData = require('alipay-sdk/lib/form')
+
 /**
  * 生成随机四位验证码
  */
@@ -43,10 +52,48 @@ const isempty = (res,data) => {
     }
   }
 }
- 
+/**
+ * 创建订单支付宝封装
+ * @param {*} goods 
+ */
+const createOrder = async (goods) => {
+  // 设置调用的接口
+  let method = 'alipay.trade.page.pay'
+  // 设置公共参数
+  // let params = {
+  //   app_id: '2016101500692746', /*应用的id*/
+  //   method: method,/*调用接口*/
+  //   format: 'JSON', /*返回数据*/
+  //   charset: 'utf-8',/*字符编码*/
+  //   timestamp: '',/*请求时间戳*/
+  //   version: '1.0'/*版本*/
+  // }
+
+  // 根据官方给的api文档提供一个参数合集
+  let bizContent = {
+    out_trade_no: goods.orderNumber, //订单号 时间戳
+    product_code: 'FAST_INSTANT_TRADE_PAY', // 商品码
+    total_amount: goods.allTotal, // 商品价格
+    subject: goods.orderName, // 订单名称
+    timeout_express: '5m', // 超时时间
+    passback_params: JSON.stringify(goods.pack_params) // 返回一个参数，用于自定义商品信息最后做通知使用
+  }
+  // 创建formData 对象
+  const formData = new AlipayFormData()
+  formData.addField('returnUrl','http://192.168.97.240:3000/public/') // 客户支付成功之后会同步跳回的地址
+  // formData.addField('notifyUrl','http://192.168.97.240:3000/public/')  // 支付宝在用户支付成功之后会异步通知的回调地址，必须在公网ip 才能收到
+  formData.addField('bizContent', bizContent); // 将必要的参数集合添加进 form 表单
+
+  // 异步向支付宝 发送生成订单请求，第二个参数为公共参数，可以为空
+  const result = await alipay.exec(method, {}, {
+    formData: formData
+  })
+  return result
+}
 module.exports = {
   variCode,
   variEmail,
   isempty,
-  variPhone
+  variPhone,
+  createOrder
 }

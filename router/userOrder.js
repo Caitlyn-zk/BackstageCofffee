@@ -1,7 +1,7 @@
 // 用户订单表的回调函数
 let common = require('../common/common')
 let data = require('../control/data/data')
-
+let checkSign = require('../common/checkSign')
 // 添加订单的回调函数
 let addUserOrder = async (req, res) => {
   let userId = Number(req.body.userId || req.query.userId)
@@ -50,8 +50,18 @@ let addUserOrder = async (req, res) => {
       }
     }
     if (count) {
+      // 创建对象用于支付宝订单信息
+      let goods = {
+        orderName: '订单名称',
+        allTotal: allTotal,
+        orderNumber: orderNumber,
+        pack_params: req.body
+      }
+      // 创建支付宝订单
+      let resultOfAlipay = await common.createOrder(goods)
       res.json({
         status: 200,
+        result: resultOfAlipay,
         data: {
           allTotal: allTotal,
           orderNumber: orderNumber
@@ -66,7 +76,19 @@ let addUserOrder = async (req, res) => {
     }
   }
 }
-
+// 支付信息
+let payresult = (req, res) => {
+  console.log(req.body)
+}
+// 验签结果
+let notify = async (req, res) => {
+  let result = await checkSign(postData)
+  if(result){
+    console.log('订单支付成功')
+  }
+}
 module.exports = {
-  addUserOrder
+  addUserOrder,
+  payresult,
+  notify
 }
