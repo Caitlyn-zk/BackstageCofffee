@@ -114,8 +114,8 @@
 					label="操作"
 					width="100">
 					<template slot-scope="scope">
-						<el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
-						<el-button type="text" size="small">编辑</el-button>
+						<el-button @click="handleClick(scope.$index, tableData)" type="text" size="small">删除</el-button>
+						<el-button type="text" size="small" @click="updataceffdata(scope.$index, tableData)">编辑</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -129,8 +129,8 @@
 				:total="tableData.length">    <!--//这是显示总共有多少数据，-->
 			</el-pagination>
 		</div>
-			<!-- 弹框 -->
-		<el-dialog title="添加收货地址" append-to-body :visible.sync="dialogFormVisible">
+			<!-- 添加商品弹框 -->
+		<el-dialog title="添加商品" append-to-body :visible.sync="dialogFormVisible">
 			<el-form name="nps-dialogAdd" :model="form" class="nps-dialogAdd">
 				<el-form-item label="商品分类" :label-width="formLabelWidth">
 					<el-input name="classification" v-model="form.classification" autocomplete="off"></el-input>
@@ -192,11 +192,77 @@
 				<el-button type="primary" @click="addVisible">确 定</el-button>
 			</div>
 		</el-dialog>
+		<!-- 修改商品弹框 -->
+		<el-dialog title="编辑商品信息" append-to-body :visible.sync="dialogFormVisibledata">
+			<el-form name="from" :model="updataform" class="nps-dialogupdata">
+				<el-form-item label="商品分类" :label-width="formLabelWidth">
+					<el-input name="classification" v-model="updataform.classification" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="商品名字" :label-width="formLabelWidth">
+					<el-input name="name" v-model="updataform.name" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="商品描述" :label-width="formLabelWidth">
+					<el-input name="title" v-model="updataform.title" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="商品详情描述" :label-width="formLabelWidth">
+					<el-input name="description" v-model="updataform.description" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="商品图片" :label-width="formLabelWidth">
+					<el-input name="img" v-model="updataform.img" type="file" accept="image/*" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="烘焙方式" :label-width="formLabelWidth">
+					<el-input name="bakingDescription" v-model="updataform.bakingDescription" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="原产地" :label-width="formLabelWidth">
+					<el-input name="placefOrigin" v-model="updataform.placefOrigin" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="强度" :label-width="formLabelWidth">
+					<el-input name="strength" v-model="updataform.strength" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="杯型" :label-width="formLabelWidth">
+					<el-input name="capAmount" v-model="updataform.capAmount" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="香型" :label-width="formLabelWidth">
+					<el-select  class="nps-aroma" v-model="updataform.region" value=1 >
+						<el-option :key="item.index" v-for="item of aromadata" :label="item.value" :value="item.aromaId"></el-option>
+					</el-select>
+					<!-- <el-input name="aroma" v-model="updataform.value" autocomplete="off"></el-input> -->
+				</el-form-item>
+				<el-form-item label="酸度" :label-width="formLabelWidth">
+					<el-input name="acidity" v-model="updataform.acidity" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="苦度" :label-width="formLabelWidth">
+					<el-input name="bitterness" v-model="updataform.bitterness" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="酒精度" :label-width="formLabelWidth">
+					<el-input name="alcohol" v-model="updataform.alcohol" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="摄氏度" :label-width="formLabelWidth">
+					<el-input name="degreeofBaking" v-model="updataform.degreeofBaking" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="咖啡类型" :label-width="formLabelWidth">
+					<el-input name="coffeeClassification" v-model="updataform.coffeeClassification" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="价格" :label-width="formLabelWidth">
+					<el-input name="price" v-model="updataform.price" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="优惠" :label-width="formLabelWidth">
+					<el-input name="discountPrice" v-model="updataform.discountPrice" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="味道" :label-width="formLabelWidth">
+					<el-input name="taste" v-model="updataform.taste" autocomplete="off"></el-input>
+				</el-form-item>
+			</el-form>
+			<div slot="footer" class="dialog-footer">
+				<el-button @click="dialogFormVisibledata = false">取 消</el-button>
+				<el-button type="primary" @click="updatecoffCap">确定修改</el-button>
+			</div>
+		</el-dialog>
 	</div>
 </template>
 
 <script>
-import {goodsRequest, addGoodsRequest} from 'commonjs/Requestaxios'
+import {goodsRequest, addGoodsRequest, spliceGoodsRequest, updatecoffGoodsRequest, aromaGoodsRequest} from 'commonjs/Requestaxios'
 var api = 'http://192.168.97.222:3000/'
 // import qs from 'qs'
 export default {
@@ -212,28 +278,30 @@ export default {
 			// 定义一个变量来存放方法
 			newsShow: '',
 			api,
-			dialogTableVisible: false,
 			dialogFormVisible: false,
+			dialogFormVisibledata: false,
 			form: {
 				classification: '1',
-				name: 'nanem',
-				title: '1',
-				description: '',
+				name: '咖啡',
+				title: '这里是描述',
+				description: '商品详情描述',
 				img: '',
 				bakingDescription: '1',
-				placefOrigin: 'skjsjk',
-				price: '12.2',
-				aroma: '',
-				strength: '',
-				bitterness: '',
-				alcohol: '',
-				acidity: '',
-				degreeofBaking: '',
-				coffeeClassification: '',
-				discountPrice: '',
-				taste: '',
-				capAmount: ''
+				placefOrigin: '中国',
+				price: '62.2',
+				aroma: '1',
+				strength: '6',
+				bitterness: '1',
+				alcohol: '6',
+				acidity: '6',
+				degreeofBaking: '6',
+				coffeeClassification: '3',
+				discountPrice: '3',
+				taste: '还可以',
+				capAmount: '6'
 			},
+			aromadata: [],
+			updataform: {},
 			formLabelWidth: '120px'
 		}
 	},
@@ -247,13 +315,62 @@ export default {
 	watch: {
 		'$store.state.goodsRequest.tableData' () {
 			this.tableData = this.$store.state.goodsRequest.tableData
+			// console.log(this.tableData)
 			console.log(this.tableData)
+		},
+		'$store.state.goodsRequest.updataform' () {
+			this.updataform = this.$store.state.goodsRequest.updataform
+			// console.log(this.tableData)
+			console.log(this.updataform)
 		}
 	},
 	methods: {
 		// 删除行
-		handleClick (row) {
-		console.log(row)
+		handleClick (index, row) {
+			row.splice(index, 1)
+			console.log(this.id)
+			// console.log(this.tableData)
+			let tableid = null
+			for (let prop in this.tableData) {
+				tableid = this.tableData[prop]
+				// console.log(tableid.id)
+			}
+			console.log(tableid.id)
+			// console.log(this.tableData.id)
+			spliceGoodsRequest({
+				data: {
+					id: tableid.id
+				},
+				error: () => {
+					this.$message({
+						// message: '错了错了'
+					})
+				},
+				success: (res) => {
+					if (res.status === 200) {
+						console.log(res)
+						// 存入vuex中
+						// this.$store.commit('changeAddGoods', res.data)
+						this.$message({
+							message: '删除成功！',
+							showClose: true,
+							duration: 1000,
+							onClose: () => {
+								// this.tableData.splice(index, 1)
+								row.splice(index, 1)
+								this.handleUserList()
+							}
+						})
+					} else {
+						this.$message({
+							message: res.message,
+							type: 'error',
+							showClose: true,
+							duration: 3000
+						})
+					}
+				}
+			})
 		},
 		// 初始页currentPage、初始每页数据数pagesize和数据data
 		handleSizeChange: function (size) {
@@ -271,11 +388,8 @@ export default {
 			// 存入vuex中
 			console.log(this.form)
 			let addCoffeeCapForm = document.querySelector('.nps-dialogAdd')
-			console.log(addCoffeeCapForm)
 			let addCoffeeCapFormData = new FormData(addCoffeeCapForm)
 			addCoffeeCapFormData.append('se', 1)
-
-			console.log(addCoffeeCapFormData)
 			addGoodsRequest({
 				data: addCoffeeCapFormData,
 				error: () => {
@@ -308,6 +422,7 @@ export default {
 				}
 			})
 		},
+		// 请求商品渲染
 		handleUserList () {
 			// ajax封装的使用
 			// 请求表的数据
@@ -322,8 +437,9 @@ export default {
 				},
 				success: (res) => {
 					if (res.status === 200) {
-						// console.log(res)
+						console.log(res)
 						// 存入vuex中
+						console.log(res.data.id)
 						this.$store.commit('changeGoods', res.data)
 						this.$message({
 							message: '数据返回成功',
@@ -331,6 +447,93 @@ export default {
 							duration: 1000,
 							onClose: () => {
 								// console.log(res.data)
+							}
+						})
+					} else {
+						this.$message({
+							message: res.message,
+							type: 'error',
+							showClose: true,
+							duration: 3000
+						})
+					}
+				}
+			})
+		},
+		// 修改按钮
+		updataceffdata (index, row) {
+			this.dialogFormVisibledata = true
+			// let id = row[index].id
+			// console.log(row[index])
+			this.$store.commit('updataceff', row[index])
+			aromaGoodsRequest({
+				data: {
+					id: this.tableData.id
+				},
+				error: () => {
+					// this.loginLoading = false
+					// console.log(1232)
+				},
+				success: (res) => {
+					if (res.status === 200) {
+						console.log(res.data)
+						this.aromadata = res.data
+						// 存入vuex中
+						// this.$store.commit('changeGoods', res.data)
+						for (let item of res.data) {
+							console.log(item)
+							// html+='<el-option label="'+item.fragrance+'" value="'+item.value+'"></el-option>'
+						}
+						console.log(this.aromadata)
+						this.$message({
+							message: '数据返回成功',
+							showClose: true,
+							duration: 1000,
+							onClose: () => {
+								// console.log(res.data)
+							}
+						})
+					} else {
+						this.$message({
+							message: res.message,
+							type: 'error',
+							showClose: true,
+							duration: 3000
+						})
+					}
+				}
+			})
+		},
+		// 修改商品
+		updatecoffCap () {
+			// this.dialogFormVisible = false
+			// ajax封装的使用
+			// 存入vuex中
+			// this.updataform = this.tableData
+			console.log(this.updataform)
+			let updataCoffeeForm = document.querySelector('.nps-dialogupdata')
+			console.log(updataCoffeeForm)
+			let updataCoffeeFormData = new FormData(updataCoffeeForm)
+			updataCoffeeFormData.set('se', 1)
+			updatecoffGoodsRequest({
+				data: updataCoffeeFormData,
+				error: () => {
+					this.$message({
+						message: ''
+					})
+				},
+				success: (res) => {
+					if (res.status === 200) {
+						console.log(res)
+						// 存入vuex中
+						// this.$store.commit('changeAddGoods', res.data)
+						this.$message({
+							message: '修改成功',
+							showClose: true,
+							duration: 1000,
+							onClose: () => {
+								this.handleUserList()
+								console.log(res.data)
 							}
 						})
 					} else {

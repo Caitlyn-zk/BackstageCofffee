@@ -1,5 +1,7 @@
 let state = {
-	tableData: []
+	tableData: [],
+	updataform: {},
+	userTableData: []
 }
 let mutations = {
 	// 渲染咖啡胶囊表
@@ -13,17 +15,18 @@ let mutations = {
 		})
 		state.tableData = data
 	},
-	// 添加商品
-	changeAddGoods (state, data) {
-		// data.map((item) => {
-		// 	item.img = JSON.parse(item.img)
-		// 	item.imgpic = item.img[0] || ''
-		// })
+	// 修改商品
+	updataceff (state, data) {
 		console.log(data)
-		state.tableData = data
+		state.updataform = data
+	},
+	// 用户信息渲染
+	UserListdata (state, data) {
+		console.log(data)
+		state.userTableData = data
 	}
 }
-export default {                                                                                                     
+export default {
 	state: state,
 	mutations
 }

@@ -5,7 +5,7 @@
 		</div>
 		<div>
 			<el-table
-				:data="tableData"
+				:data="userTableData"
 				border
 				height="90%"
 				style="width: 100%">
@@ -27,11 +27,6 @@
 				<el-table-column
 				prop="email"
 				label="电子邮件"
-				width="100">
-				</el-table-column>
-				<el-table-column
-				prop="distributeclass"
-				label="经销商"
 				width="100">
 				</el-table-column>
 				<el-table-column
@@ -67,7 +62,7 @@
 						width="100">
 						</el-table-column>
 						<el-table-column
-							prop="city"
+							prop="location"
 							label="市区"
 							width="120">
 						</el-table-column>
@@ -108,15 +103,57 @@
 </template>
 
 <script>
+import {UserRequest} from 'commonjs/Requestaxios'
 export default {
 	data () {
 		return {
-			tableData: []
+			userTableData: []
 		}
+	},
+	created () {
+		this.UserList()
+		// console.log(this.form.options)
+		// console.log(item.placefOrigin)
 	},
 	methods: {
 		deleteRow (index, rows) {
 			rows.splice(index, 1)
+		},
+		// 请求用户地址渲染
+		UserList () {
+			// ajax封装的使用
+			// 请求表的数据
+			UserRequest({
+				data: {
+					email: this.userTableData.email
+				},
+				error: () => {
+				},
+				success: (res) => {
+					if (res.status === 200) {
+						console.log(res)
+						// 存入vuex中
+						console.log(res.data)
+						this.$store.commit('UserListdata', res.data)
+						this.$message({
+							message: '数据返回成功',
+							showClose: true,
+							duration: 1000,
+							onClose: () => {
+								console.log(111)
+								// this.tableData = res.data
+							}
+						})
+					} else {
+						this.$message({
+							message: res.message,
+							type: 'error',
+							showClose: true,
+							duration: 3000
+						})
+					}
+				}
+			})
 		}
 	}
 }

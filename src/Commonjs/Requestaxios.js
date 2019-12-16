@@ -35,6 +35,7 @@ let retrieveRequest = (params) => {
 		params.error(error)
 	})
 }
+// 咖啡胶囊
 // 发布商品
 let goodsRequest = (params) => {
 	axiosRequest('getCoffgCapLists', 'post', params.data).then(function (res) {
@@ -46,7 +47,7 @@ let goodsRequest = (params) => {
 // 添加商品
 let addGoodsRequest = (params) => {
 	axiosRequest('addCoffcap', 'post', params.data, {
-		headers: { "Content-Type": "multipart/form-data" }
+		headers: { 'Content-Type': 'multipart/form-data' }
 	}).then(function (res) {
 		params.success(res)
 		console.log(res)
@@ -56,10 +57,48 @@ let addGoodsRequest = (params) => {
 		params.error(error)
 	})
 }
+// 删除商品
+let spliceGoodsRequest = (params) => {
+	axiosRequest('deletecoffCap', 'post', params.data).then(function (res) {
+		params.success(res)
+	}).catch((error) => {
+		params.error(error)
+	})
+}
+// 修改
+let updatecoffGoodsRequest = (params) => {
+	axiosRequest('updatecoffCap', 'post', params.data, {
+		headers: { 'Content-Type': 'multipart/form-data' }
+	}).then(function (res) {
+		params.success(res)
+	}).catch((error) => {
+		params.error(error)
+	})
+}
+// 香型请求
+let aromaGoodsRequest = (params) => {
+	axiosRequest('getCoffCaparoma', 'post', params.data).then(function (res) {
+		params.success(res)
+	}).catch((error) => {
+		params.error(error)
+	})
+}
+// 买家信息
+let UserRequest = (params) => {
+	axiosRequest('changeInfor', 'post', params.data).then(function (res) {
+		params.success(res)
+	}).catch((error) => {
+		params.error(error)
+	})
+}
 export {
 	loginRequest,
 	codeRequest,
 	retrieveRequest,
 	goodsRequest,
-	addGoodsRequest
+	addGoodsRequest,
+	spliceGoodsRequest,
+	updatecoffGoodsRequest,
+	aromaGoodsRequest,
+	UserRequest
 }
