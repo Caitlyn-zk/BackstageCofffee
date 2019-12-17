@@ -5,10 +5,9 @@
 		</div>
 		<div>
 			<el-table
-				:data="userTableData"
-				border
-				height="90%"
-				style="width: 100%">
+			:data="userTableData"
+			max-height="850"
+			style="width: 100%">
 				<el-table-column
 				prop="id"
 				label="序号"
@@ -30,28 +29,33 @@
 				width="100">
 				</el-table-column>
 				<el-table-column
-				prop="address"
-				label="收货地址"
-				width="100">
+					prop="location"
+					label="国家"
+					width="120">
+				</el-table-column>
+				<el-table-column
+					prop="language"
+					label="语言"
+					width="120">
 				</el-table-column>
 				<el-table-column
 				prop="distributeclass"
-				label="经销商"
+				label="分布类"
 				width="100">
 				</el-table-column>
 				<el-table-column
-				prop="language"
-				label="语言"
+				prop="deliveryAddress"
+				label="分布类"
+				width="100">
+				</el-table-column>
+				<el-table-column
+				prop="title"
+				label="描述"
 				width="100">
 				</el-table-column>
 				<el-table-column
 				prop="shippingNotes"
 				label="装运通知单"
-				width="100">
-				</el-table-column>
-				<el-table-column
-				prop="subscription"
-				label="订阅"
 				width="100">
 				</el-table-column>
 				<el-table-column label="配送信息">
@@ -62,14 +66,9 @@
 						width="100">
 						</el-table-column>
 						<el-table-column
-							prop="location"
-							label="市区"
-							width="120">
-						</el-table-column>
-						<el-table-column
-						prop="deliveryAddress"
-						label="详细送货地址"
-						width="100">
+						prop="address"
+						label="收货地址"
+						width="150">
 						</el-table-column>
 						<el-table-column
 						prop="phone"
@@ -79,6 +78,16 @@
 						<el-table-column
 						prop="postCode"
 						label="邮政编码"
+						width="100">
+						</el-table-column>
+						<el-table-column
+						prop="shippingNotes"
+						label="备注"
+						width="100">
+						</el-table-column>
+						<el-table-column
+						prop="subscription"
+						label="啥"
 						width="100">
 						</el-table-column>
 					</el-table-column>
@@ -112,8 +121,7 @@ export default {
 	},
 	created () {
 		this.UserList()
-		// console.log(this.form.options)
-		// console.log(item.placefOrigin)
+		console.log(this.userTableData)
 	},
 	methods: {
 		deleteRow (index, rows) {
@@ -134,14 +142,14 @@ export default {
 						console.log(res)
 						// 存入vuex中
 						console.log(res.data)
-						this.$store.commit('UserListdata', res.data)
+						// this.$store.commit('UserListdata', res.data)
 						this.$message({
 							message: '数据返回成功',
 							showClose: true,
 							duration: 1000,
 							onClose: () => {
 								console.log(111)
-								// this.tableData = res.data
+								this.userTableData = res.data
 							}
 						})
 					} else {

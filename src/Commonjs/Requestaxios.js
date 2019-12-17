@@ -27,6 +27,14 @@ let codeRequest = (params) => {
 		params.error(error)
 	})
 }
+// 登录时间
+let logonTimeRequest = (params) => {
+	axiosRequest('backislogin', 'post', params.data).then(function (res) {
+		params.success(res)
+	}).catch((error) => {
+		params.error(error)
+	})
+}
 // 找回密码
 let retrieveRequest = (params) => {
 	axiosRequest('backupdate', 'post', params.data).then(function (res) {
@@ -85,7 +93,7 @@ let aromaGoodsRequest = (params) => {
 }
 // 买家信息
 let UserRequest = (params) => {
-	axiosRequest('changeInfor', 'post', params.data).then(function (res) {
+	axiosRequest('getUsers', 'post', params.data).then(function (res) {
 		params.success(res)
 	}).catch((error) => {
 		params.error(error)
@@ -95,6 +103,7 @@ export {
 	loginRequest,
 	codeRequest,
 	retrieveRequest,
+	logonTimeRequest,
 	goodsRequest,
 	addGoodsRequest,
 	spliceGoodsRequest,

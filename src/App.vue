@@ -1,39 +1,60 @@
 <template>
-  <div id="app" @click="clicked">
+  <div id="app">
 		<router-view name="Index"></router-view>
 		<router-view></router-view>
   </div>
 </template>
 
 <script>
+import {logonTimeRequest} from 'commonjs/Requestaxios'
 // import Index from 'components/Index'
 export default {
 	name: 'App',
 	data () {
 		return {
-			// 最后点击时间
-			aTime: new Date().getTime(),
-			// 当前时间
-			cTime: new Date().getTime(),
-			// 超出时间
-			tOut: 10 * 60 * 1000
+			// token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6ImFhMTIzNDU2IiwiaWF0IjoxNTc2NTQ2ODc3LCJleHAiOjE1NzY1NDg2Nzd9.JATU_MPNONL5PHQdFi9xP43SglnYY9F5FzET6Lu2YI0'
 		}
 	},
 	mounted () {
-		window.setInterval(this.tTime, 1000)
+	},
+	created () {
+		this.loginTime()
 	},
 	methods: {
-		clicked () {
-			// 当前页面点击更新时间
-			this.aTime = new Date().getTime()
-		},
-		tTime () {
-			this.cTime = new Date().getTime()
-			if (this.ctTime - this.lTime > 10) {
-				if (JSON.parse(sessionStorage.getItem('Login')) === true) {
-					// 退出登录
+		loginTime () {
+			// ajax封装的使用
+			// 请求表的数据
+			let tokenlong = window.localStorage.getItem('token')
+			logonTimeRequest({
+				data: {
+					token: tokenlong
+				},
+				error: () => {
+				},
+				success: (res) => {
+					if (res.status === 200) {
+						// 存入vuex中
+						// this.$store.commit('UserListdata', res.data)
+						this.$message({
+							showClose: true,
+							duration: 1,
+							onClose: () => {
+								// this.$router.push('/')
+							}
+						})
+					} else {
+						this.$message({
+							message: res.message,
+							type: 'error',
+							showClose: true,
+							duration: 3000,
+							onClose: () => {
+								// this.$router.push('/login')
+							}
+						})
+					}
 				}
-			}
+			})
 		}
 	}
 }

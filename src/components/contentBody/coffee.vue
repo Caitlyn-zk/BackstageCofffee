@@ -1,7 +1,7 @@
 <template>
 	<div class="nps-back-user">
 		<div class="nps-body-title">
-			咖啡胶囊
+			咖啡列表
 		</div>
 		<div>
 			<div class="nps-table-title-add">

@@ -13,7 +13,6 @@ Vue.config.productionTip = false
 Vue.prototype.$request = axiosRequest
 Vue.prototype.$get = get
 Vue.prototype.$post = post
-console.log(axiosRequest)
 
 // 全局路由 路由拦截
 router.beforeEach((to, from, next) => {

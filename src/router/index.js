@@ -6,7 +6,7 @@ import Retrieveps from 'components/Login/retrieveps'
 import User from 'components/contentBody/user'
 import Home from 'components/contentBody/home'
 import bodyIndex from 'components/contentBody/index'
-// import fenye from 'components/contentBody/fenye'
+import Coffee from 'components/contentBody/coffee'
 
 Vue.use(Router)
 
@@ -31,6 +31,12 @@ export default new Router({
 			}, {
 					path: 'bodyindex',
 					component: bodyIndex,
+					meta: {
+						requireUser: false
+					}
+				}, {
+					path: 'coffee',
+					component: Coffee,
 					meta: {
 						requireUser: false
 					}

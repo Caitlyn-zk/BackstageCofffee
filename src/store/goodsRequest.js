@@ -6,7 +6,6 @@ let state = {
 let mutations = {
 	// 渲染咖啡胶囊表
 	changeGoods (state, data) {
-		console.log(data)
 		data.map((item) => {
 			// console.log(item.img)
 			// 对象转数组
@@ -17,12 +16,13 @@ let mutations = {
 	},
 	// 修改商品
 	updataceff (state, data) {
-		console.log(data)
+		console.log(data.img)
+		data.img = data.img[0]
 		state.updataform = data
+		console.log(state.updataform.img)
 	},
 	// 用户信息渲染
 	UserListdata (state, data) {
-		console.log(data)
 		state.userTableData = data
 	}
 }

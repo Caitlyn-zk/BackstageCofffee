@@ -6,6 +6,7 @@ let mutations = {
 	changeUser (state, data) {
 		state.info = data.info
 		state.token = data.token
+		console.log(data)
 	},
 	changeCode (state, data) {
 		state.info = data.info

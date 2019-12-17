@@ -67,7 +67,7 @@ import {loginRequest} from 'commonjs/Requestaxios'
 				form.on('submit(formDemo)', (data) => {
 					// window.layer.msg(JSON.stringify(data.field))
 					// 获取邮箱密码
-					let logindata = JSON.stringify(data.field)
+					// let logindata = JSON.stringify(data.field)
 					this.loginLoading = true
 					// ajax封装的使用
 					loginRequest({
@@ -86,7 +86,8 @@ import {loginRequest} from 'commonjs/Requestaxios'
 							this.loginLoading = false
 							if (res.status === 200) {
 								// 存放token
-								window.localStorage.setItem('token', logindata)
+								console.log(res.data.token)
+								window.localStorage.setItem('token', res.data.token)
 								window.localStorage.setItem('info', JSON.stringify(res.data.info))
 								console.log(JSON.stringify(res.data.info))
 								// 存入vuex中
