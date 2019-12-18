@@ -99,6 +99,14 @@ let UserRequest = (params) => {
 		params.error(error)
 	})
 }
+// 咖啡机
+let Coffeemachine = (params) => {
+	axiosRequest('getCoffeeMachineLists', 'post', params.data).then(function (res) {
+		params.success(res)
+	}).catch((error) => {
+		params.error(error)
+	})
+}
 export {
 	loginRequest,
 	codeRequest,
@@ -109,5 +117,6 @@ export {
 	spliceGoodsRequest,
 	updatecoffGoodsRequest,
 	aromaGoodsRequest,
-	UserRequest
+	UserRequest,
+	Coffeemachine
 }

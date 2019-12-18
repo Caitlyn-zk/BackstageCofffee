@@ -17,25 +17,16 @@ Vue.prototype.$post = post
 // 全局路由 路由拦截
 router.beforeEach((to, from, next) => {
 	let token = window.localStorage.getItem('token')
-	if (to.meta.requireUser && to.meta.requireUser === 1) {
+	if (to.meta.requireUser) {
 		// 判断用户登录
 		if (token) {
 			next()
 		} else {
 			next('/login')
 		}
-	} else if (to.meta.requireUser && to.meta.requireUser === 2) {
-		// 判断是否登录 登录了就不能进入当前页面
-		if (token) {
-			// 如果登陆了，就直接进入首页
-			next('/')
-		} else {
-			next()
-		}
 	} else {
 		// 不需要登录 直接进入首页
 		next()
-		// eslint-disable-next-line no-tabs
 	}
 })
 /* eslint-disable no-new */

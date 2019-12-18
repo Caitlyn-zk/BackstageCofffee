@@ -26,12 +26,12 @@
 				<el-table-column
 				prop="email"
 				label="电子邮件"
-				width="100">
+				width="150">
 				</el-table-column>
 				<el-table-column
 					prop="location"
 					label="国家"
-					width="120">
+					width="100">
 				</el-table-column>
 				<el-table-column
 					prop="language"
@@ -46,7 +46,7 @@
 				<el-table-column
 				prop="deliveryAddress"
 				label="分布类"
-				width="100">
+				width="60">
 				</el-table-column>
 				<el-table-column
 				prop="title"
@@ -63,7 +63,7 @@
 						<el-table-column
 						prop="city"
 						label="城市"
-						width="100">
+						width="60">
 						</el-table-column>
 						<el-table-column
 						prop="address"
@@ -73,7 +73,7 @@
 						<el-table-column
 						prop="phone"
 						label="电话"
-						width="100">
+						width="120">
 						</el-table-column>
 						<el-table-column
 						prop="postCode"
@@ -91,20 +91,20 @@
 						width="100">
 						</el-table-column>
 					</el-table-column>
-					<el-table-column
-						fixed="right"
-						label="操作"
-						width="120">
-						<template slot-scope="scope">
-							<el-button
-								@click.native.prevent="deleteRow(scope.$index, tableData)"
-								type="text"
-								size="small">
-								移除
-							</el-button>
-							<el-button type="text" size="small">查看</el-button>
-						</template>
-					</el-table-column>
+				</el-table-column>
+				<el-table-column
+					fixed="right"
+					label="操作"
+					width="120">
+					<template slot-scope="scope">
+						<el-button
+							@click.native.prevent="deleteRow(scope.$index, tableData)"
+							type="text"
+							size="small">
+							移除
+						</el-button>
+						<el-button type="text" size="small">查看</el-button>
+					</template>
 				</el-table-column>
 			</el-table>
 		</div>

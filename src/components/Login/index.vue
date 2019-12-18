@@ -20,9 +20,8 @@
 						<template>
 							<el-checkbox class="fl" v-model="checked">备选项</el-checkbox>
 						</template>
-						<span class="fr margin-r-30 padding-r-35"><router-link to="retrieveps">找回密码</router-link></span>
+						<span class="fr margin-r-30 padding-r-35"><router-link to="/retrieveps">找回密码</router-link></span>
 					</div>
-
 				</div>
 				<div class="layui-form-item">
 					<div class="layui-input-block">
@@ -77,12 +76,12 @@ import {loginRequest} from 'commonjs/Requestaxios'
 						},
 						error: () => {
 							this.loginLoading = false
-							console.log(1232)
+							// console.log(1232)
 						},
 						success: (res) => {
-							console.log(res)
-							console.log(this.loginForm.username)
-							console.log(this.loginForm.password)
+							// console.log(res)
+							// console.log(this.loginForm.username)
+							// console.log(this.loginForm.password)
 							this.loginLoading = false
 							if (res.status === 200) {
 								// 存放token

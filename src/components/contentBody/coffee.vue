@@ -1,14 +1,14 @@
 <template>
 	<div class="nps-back-user">
 		<div class="nps-body-title">
-			咖啡列表
+			咖啡机
 		</div>
 		<div>
 			<div class="nps-table-title-add">
 				<el-button type="" @click="dialogFormVisible = true">添加商品<i class="el-icon-upload el-icon--right"></i></el-button>
 			</div>
 			<el-table
-				:data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+				:data="tableDataroducts.slice((currentPage-1)*pagesize,currentPage*pagesize)"
 				border
 				style="width: 100%">
 				<el-table-column
@@ -17,77 +17,27 @@
 					width="60">
 				</el-table-column>
 				<el-table-column
-					prop="classification"
-					label="分类"
-					width="100">
-				</el-table-column>
-				<el-table-column
 					prop="name"
-					label="商品姓名"
+					label="名字"
 					width="100">
 				</el-table-column>
 				<el-table-column
-					prop="title"
-					label="描述"
-					width="180">
+					prop="npsCommodity"
+					label="咖啡机商品"
+					width="100">
+				</el-table-column>
+				<el-table-column
+					prop="color"
+					label="咖啡机颜色"
+					width="100">
 				</el-table-column>
 				<el-table-column
 					prop="img"
 					label="图片"
 					width="">
 					<template scope="scope">
-						<img :src="api + scope.row.imgpic" width="60" height="60" class="head_pic"/>
+						<img :src=" api + scope.row.img[0]" width="60" height="60" class="head_pic"/>
 					</template>
-				</el-table-column>
-				<el-table-column
-					prop="backingDescription"
-					label="烘焙方式"
-					width="100">
-				</el-table-column>
-				<el-table-column
-					prop="placefOrigin"
-					label="原产地"
-					width="80">
-				</el-table-column>
-				<el-table-column
-					prop="strength"
-					label="强度"
-					width="80">
-				</el-table-column>
-				<el-table-column
-					prop="capAmount"
-					label="杯型"
-					width="100">
-				</el-table-column>
-				<el-table-column
-					prop="value"
-					label="香型"
-					width="100">
-				</el-table-column>
-				<el-table-column
-					prop="acidity"
-					label="酸度"
-					width="100">
-				</el-table-column>
-				<el-table-column
-					prop="bitterness"
-					label="苦度"
-					width="100">
-				</el-table-column>
-				<el-table-column
-					prop="alcohol"
-					label="酒精度"
-					width="100">
-				</el-table-column>
-				<el-table-column
-					prop="degreeofBaking"
-					label="摄氏度"
-					width="100">
-				</el-table-column>
-				<el-table-column
-					prop="coffeeClassification"
-					label="咖啡的分类"
-					width="100">
 				</el-table-column>
 				<el-table-column
 					prop="price"
@@ -100,9 +50,19 @@
 					width="100">
 				</el-table-column>
 				<el-table-column
-					prop="taste"
-					label="味道"
+					prop="specifications"
+					label="规格"
 					width="100">
+				</el-table-column>
+				<el-table-column
+					prop="manual"
+					label="说明书链接"
+					width="80">
+				</el-table-column>
+				<el-table-column
+					prop="cmachineclass"
+					label="咖啡机类"
+					width="80">
 				</el-table-column>
 				<el-table-column
 					prop="createTime"
@@ -114,8 +74,8 @@
 					label="操作"
 					width="100">
 					<template slot-scope="scope">
-						<el-button @click="handleClick(scope.$index, tableData)" type="text" size="small">删除</el-button>
-						<el-button type="text" size="small" @click="updataceffdata(scope.$index, tableData)">编辑</el-button>
+						<el-button @click="handleClick(scope.$index, tableDataroducts)" type="text" size="small">删除</el-button>
+						<el-button type="text" size="small" @click="updataceffdata(scope.$index, tableDataroducts)">编辑</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -126,56 +86,26 @@
 				:page-sizes="[5, 10, 20, 40]"
 				:page-size="pagesize"
 				layout="total, sizes, prev, pager, next, jumper"
-				:total="tableData.length">    <!--//这是显示总共有多少数据，-->
+				:total="tableDataroducts.length">    <!--//这是显示总共有多少数据，-->
 			</el-pagination>
 		</div>
 			<!-- 添加商品弹框 -->
-		<el-dialog title="添加商品" append-to-body :visible.sync="dialogFormVisible">
+		<el-dialog title="添加咖啡机商品" append-to-body :visible.sync="dialogFormVisible">
 			<el-form name="nps-dialogAdd" :model="form" class="nps-dialogAdd">
-				<el-form-item label="商品分类" :label-width="formLabelWidth">
-					<el-input name="classification" v-model="form.classification" autocomplete="off"></el-input>
-				</el-form-item>
 				<el-form-item label="商品名字" :label-width="formLabelWidth">
 					<el-input name="name" v-model="form.name" autocomplete="off"></el-input>
 				</el-form-item>
-				<el-form-item label="商品描述" :label-width="formLabelWidth">
-					<el-input name="title" v-model="form.title" autocomplete="off"></el-input>
+				<el-form-item label="咖啡机商品" :label-width="formLabelWidth">
+					<el-input name="npsCommodity" v-model="form.npsCommodity" autocomplete="off"></el-input>
 				</el-form-item>
 				<el-form-item label="商品详情描述" :label-width="formLabelWidth">
 					<el-input name="description" v-model="form.description" autocomplete="off"></el-input>
 				</el-form-item>
+				<el-form-item label="咖啡机颜色" :label-width="formLabelWidth">
+					<el-input name="color" v-model="form.color" autocomplete="off"></el-input>
+				</el-form-item>
 				<el-form-item label="商品图片" :label-width="formLabelWidth">
 					<el-input name="img" v-model="form.img" type="file" accept="image/*" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="烘焙方式" :label-width="formLabelWidth">
-					<el-input name="bakingDescription" v-model="form.bakingDescription" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="原产地" :label-width="formLabelWidth">
-					<el-input name="placefOrigin" v-model="form.placefOrigin" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="强度" :label-width="formLabelWidth">
-					<el-input name="strength" v-model="form.strength" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="杯型" :label-width="formLabelWidth">
-					<el-input name="capAmount" v-model="form.capAmount" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="香型" :label-width="formLabelWidth">
-					<el-input name="aroma" v-model="form.aroma" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="酸度" :label-width="formLabelWidth">
-					<el-input name="acidity" v-model="form.acidity" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="苦度" :label-width="formLabelWidth">
-					<el-input name="bitterness" v-model="form.bitterness" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="酒精度" :label-width="formLabelWidth">
-					<el-input name="alcohol" v-model="form.alcohol" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="摄氏度" :label-width="formLabelWidth">
-					<el-input name="degreeofBaking" v-model="form.degreeofBaking" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="咖啡类型" :label-width="formLabelWidth">
-					<el-input name="coffeeClassification" v-model="form.coffeeClassification" autocomplete="off"></el-input>
 				</el-form-item>
 				<el-form-item label="价格" :label-width="formLabelWidth">
 					<el-input name="price" v-model="form.price" autocomplete="off"></el-input>
@@ -183,8 +113,14 @@
 				<el-form-item label="优惠" :label-width="formLabelWidth">
 					<el-input name="discountPrice" v-model="form.discountPrice" autocomplete="off"></el-input>
 				</el-form-item>
-				<el-form-item label="味道" :label-width="formLabelWidth">
-					<el-input name="taste" v-model="form.taste" autocomplete="off"></el-input>
+				<el-form-item label="规格" :label-width="formLabelWidth">
+					<el-input name="specifications" v-model="form.specifications" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="咖啡机类" :label-width="formLabelWidth">
+					<el-input name="cmachineclass" v-model="form.cmachineclass" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="说明书" :label-width="formLabelWidth">
+					<el-input name="manual" v-model="form.manual" autocomplete="off"></el-input>
 				</el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
@@ -194,62 +130,36 @@
 		</el-dialog>
 		<!-- 修改商品弹框 -->
 		<el-dialog title="编辑商品信息" append-to-body :visible.sync="dialogFormVisibledata">
-			<el-form name="from" :model="updataform" class="nps-dialogupdata">
-				<el-form-item label="商品分类" :label-width="formLabelWidth">
-					<el-input name="classification" v-model="updataform.classification" autocomplete="off"></el-input>
-				</el-form-item>
+			<el-form name="nps-dialogAdd" :model="form" class="nps-dialogAdd">
 				<el-form-item label="商品名字" :label-width="formLabelWidth">
-					<el-input name="name" v-model="updataform.name" autocomplete="off"></el-input>
+					<el-input name="name" v-model="form.name" autocomplete="off"></el-input>
 				</el-form-item>
-				<el-form-item label="商品描述" :label-width="formLabelWidth">
-					<el-input name="title" v-model="updataform.title" autocomplete="off"></el-input>
+				<el-form-item label="咖啡机商品" :label-width="formLabelWidth">
+					<el-input name="npsCommodity" v-model="form.npsCommodity" autocomplete="off"></el-input>
 				</el-form-item>
 				<el-form-item label="商品详情描述" :label-width="formLabelWidth">
-					<el-input name="description" v-model="updataform.description" autocomplete="off"></el-input>
+					<el-input name="description" v-model="form.description" autocomplete="off"></el-input>
 				</el-form-item>
-				<!-- <el-form-item label="商品图片" :label-width="formLabelWidth" >
-					<el-input name="img" v-model="updataform.img" type="file" accept="image/*" autocomplete="off"></el-input>
-				</el-form-item> -->
-				<el-form-item label="烘焙方式" :label-width="formLabelWidth">
-					<el-input name="bakingDescription" v-model="updataform.bakingDescription" autocomplete="off"></el-input>
+				<el-form-item label="咖啡机颜色" :label-width="formLabelWidth">
+					<el-input name="color" v-model="form.color" autocomplete="off"></el-input>
 				</el-form-item>
-				<el-form-item label="原产地" :label-width="formLabelWidth">
-					<el-input name="placefOrigin" v-model="updataform.placefOrigin" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="强度" :label-width="formLabelWidth">
-					<el-input name="strength" v-model="updataform.strength" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="杯型" :label-width="formLabelWidth">
-					<el-input name="capAmount" v-model="updataform.capAmount" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="香型" :label-width="formLabelWidth">
-					<el-select  class="nps-aroma" v-model="updataform.region" value=1 >
-						<el-option :key="item.aromaId" v-for="item in aromadata" :label="item.value" :value="item.aromaId"></el-option>
-					</el-select>
-				</el-form-item>
-				<el-form-item label="酸度" :label-width="formLabelWidth">
-					<el-input name="acidity" v-model="updataform.acidity" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="苦度" :label-width="formLabelWidth">
-					<el-input name="bitterness" v-model="updataform.bitterness" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="酒精度" :label-width="formLabelWidth">
-					<el-input name="alcohol" v-model="updataform.alcohol" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="摄氏度" :label-width="formLabelWidth">
-					<el-input name="degreeofBaking" v-model="updataform.degreeofBaking" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="咖啡类型" :label-width="formLabelWidth">
-					<el-input name="coffeeClassification" v-model="updataform.coffeeClassification" autocomplete="off"></el-input>
+				<el-form-item label="商品图片" :label-width="formLabelWidth">
+					<el-input name="img" v-model="form.img" type="file" accept="image/*" autocomplete="off"></el-input>
 				</el-form-item>
 				<el-form-item label="价格" :label-width="formLabelWidth">
-					<el-input name="price" v-model="updataform.price" autocomplete="off"></el-input>
+					<el-input name="price" v-model="form.price" autocomplete="off"></el-input>
 				</el-form-item>
 				<el-form-item label="优惠" :label-width="formLabelWidth">
-					<el-input name="discountPrice" v-model="updataform.discountPrice" autocomplete="off"></el-input>
+					<el-input name="discountPrice" v-model="form.discountPrice" autocomplete="off"></el-input>
 				</el-form-item>
-				<el-form-item label="味道" :label-width="formLabelWidth">
-					<el-input name="taste" v-model="updataform.taste" autocomplete="off"></el-input>
+				<el-form-item label="规格" :label-width="formLabelWidth">
+					<el-input name="specifications" v-model="form.specifications" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="咖啡机类" :label-width="formLabelWidth">
+					<el-input name="cmachineclass" v-model="form.cmachineclass" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="说明书" :label-width="formLabelWidth">
+					<el-input name="manual" v-model="form.manual" autocomplete="off"></el-input>
 				</el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
@@ -261,15 +171,15 @@
 </template>
 
 <script>
-import {goodsRequest, addGoodsRequest, spliceGoodsRequest, updatecoffGoodsRequest, aromaGoodsRequest} from 'commonjs/Requestaxios'
+import {Coffeemachine} from 'commonjs/Requestaxios'
 var api = 'http://192.168.97.240:3000/'
 // import qs from 'qs'
 export default {
 	data () {
 		return {
-			tableData: [],
+			tableDataroducts: [],
 			// 用于计算数据的长度
-			newsLength: 0,
+			// newsLength: 0,
 			// 默认的页码 初始页
 			currentPage: 1,
 			// 默认单页渲染数据的条数
@@ -280,24 +190,16 @@ export default {
 			dialogFormVisible: false,
 			dialogFormVisibledata: false,
 			form: {
-				classification: '1',
-				name: '咖啡',
-				title: '这里是描述',
+				name: '咖啡机名',
+				npsCommodity: '咖啡机商品',
 				description: '商品详情描述',
+				color: '颜色',
+				price: '102.2',
 				img: '',
-				bakingDescription: '1',
-				placefOrigin: '中国',
-				price: '62.2',
-				aroma: '1',
-				strength: '2',
-				bitterness: '1',
-				alcohol: '1',
-				acidity: '2',
-				degreeofBaking: '3',
-				coffeeClassification: '3',
-				discountPrice: '3',
-				taste: '还可以',
-				capAmount: '6'
+				discountPrice: '132',
+				specifications: '1',
+				manual: '书明书链接',
+				cmachineclass: '1'
 			},
 			aromadata: [],
 			updataform: {},
@@ -306,17 +208,18 @@ export default {
 	},
 	created () {
 		this.handleUserList()
+		console.log(this.tableDataroducts)
 		// console.log(this.form.options)
 		// console.log(item.placefOrigin)
 	},
 	watch: {
-		'$store.state.goodsRequest.tableData' () {
-			this.tableData = this.$store.state.goodsRequest.tableData
-			// console.log(this.tableData)
+		'$store.state.coffee.tableDataroducts' () {
+			this.tableDataroducts = this.$store.state.goodsRequest.tableDataroducts
+			console.log(this.$store.state)
 		},
 		'$store.state.goodsRequest.updataform' () {
 			this.updataform = this.$store.state.goodsRequest.updataform
-			// console.log(this.tableData)
+			// console.log(this.tableDataroducts)
 			// this.updataform.img
 		}
 	},
@@ -324,13 +227,13 @@ export default {
 		// 删除行
 		handleClick (index, row) {
 			row.splice(index, 1)
-			// console.log(this.tableData)
+			// console.log(this.tableDataroducts)
 			let tableid = null
-			for (let prop in this.tableData) {
-				tableid = this.tableData[prop]
+			for (let prop in this.tableDataroducts) {
+				tableid = this.tableDataroducts[prop]
 				// console.log(tableid.id)
 			}
-			// console.log(this.tableData.id)
+			// console.log(this.tableDataroducts.id)
 			spliceGoodsRequest({
 				data: {
 					id: tableid.id
@@ -349,7 +252,6 @@ export default {
 							showClose: true,
 							duration: 1000,
 							onClose: () => {
-								// this.tableData.splice(index, 1)
 								row.splice(index, 1)
 								this.handleUserList()
 							}
@@ -372,7 +274,7 @@ export default {
 		},
 		handleCurrentChange: function (currentPage) {
 			this.currentPage = currentPage
-			// console.log(this.currentPage)// 点击第几页
+			console.log(this.currentPage)// 点击第几页
 		},
 		// 添加商品
 		addVisible () {
@@ -417,16 +319,15 @@ export default {
 		handleUserList () {
 			// ajax封装的使用
 			// 请求表的数据
-			goodsRequest({
+			Coffeemachine({
 				data: {
-					id: this.tableData.id,
-					name: this.tableData.name
+					id: this.tableDataroducts.id,
+					name: this.tableDataroducts.name
 				},
 				error: () => {
-					// this.loginLoading = false
-					// console.log(1232)
 				},
 				success: (res) => {
+					console.log(res)
 					if (res.status === 200) {
 						// 存入vuex中
 						this.$store.commit('changeGoods', res.data)
@@ -453,30 +354,28 @@ export default {
 		updataceffdata (index, row) {
 			this.dialogFormVisibledata = true
 			// let id = row[index].id
-			// console.log(row[index])
+			console.log(row[index])
 			this.$store.commit('updataceff', row[index])
 			aromaGoodsRequest({
 				data: {
-					id: this.tableData.id
+					id: this.tableDataroducts.id
 				},
 				error: () => {
 					// this.loginLoading = false
 					// console.log(1232)
 				},
 				success: (res) => {
+					console.log(res.data)
 					if (res.status === 200) {
 						// 存入vuex中
 						// this.$store.commit('changeGoods', res.data)
-						// for (let item of res.data) {
-						// 	// console.log(item)
-						// 	// html+='<el-option label="'+item.fragrance+'" value="'+item.value+'"></el-option>'
-						// }
 						this.$message({
 							message: '数据返回成功',
 							showClose: true,
 							duration: 1000,
 							onClose: () => {
 								// console.log(res.data)
+								this.aromadata = res.data
 							}
 						})
 					} else {
@@ -495,11 +394,12 @@ export default {
 			// this.dialogFormVisible = false
 			// ajax封装的使用
 			// 存入vuex中
-			// this.updataform = this.tableData
+			// this.updataform = this.tableDataroducts
 			// console.log(this.updataform)
 			let updataCoffeeForm = document.querySelector('.nps-dialogupdata')
-	
+			console.log(updataCoffeeForm)
 			let updataCoffeeFormData = new FormData(updataCoffeeForm)
+			console.log(updataCoffeeFormData)
 			updataCoffeeFormData.set('se', 1)
 			updatecoffGoodsRequest({
 				data: updataCoffeeFormData,

@@ -11,6 +11,7 @@ import Coffee from 'components/contentBody/coffee'
 Vue.use(Router)
 
 export default new Router({
+	mode: 'history',  // 去掉url中的#
   routes: [
     {
       path: '/',
@@ -20,34 +21,31 @@ export default new Router({
 				Index: Index
 			},
 			meta: {
-				requireUser: 1
+				requireUser: true
 			},
 			children: [{
 					path: 'user',
 					component: User,
 					meta: {
-						requireUser: false
+						requireUser: true
 					}
 			}, {
 					path: 'bodyindex',
 					component: bodyIndex,
 					meta: {
-						requireUser: false
+						requireUser: true
 					}
 				}, {
 					path: 'coffee',
 					component: Coffee,
 					meta: {
-						requireUser: false
+						requireUser: true
 					}
 				}]
 		}, {
 			path: '/login',
 			name: 'login',
-			component: Login,
-			meta: {
-				requireUser: 2
-			}
+			component: Login
 		}, {
 			path: '/retrieveps',
 			name: 'retrievepsin',
@@ -60,7 +58,7 @@ export default new Router({
 			name: 'User',
 			component: User,
 			meta: {
-				requireUser: false
+				requireUser: true
 			}
 		}
   ]

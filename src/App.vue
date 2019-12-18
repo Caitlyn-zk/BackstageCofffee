@@ -15,10 +15,13 @@ export default {
 			// token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6ImFhMTIzNDU2IiwiaWF0IjoxNTc2NTQ2ODc3LCJleHAiOjE1NzY1NDg2Nzd9.JATU_MPNONL5PHQdFi9xP43SglnYY9F5FzET6Lu2YI0'
 		}
 	},
-	mounted () {
-	},
 	created () {
-		this.loginTime()
+		let tokenlong = window.localStorage.getItem('token')
+		console.log(tokenlong)
+		if (tokenlong !== null) {
+			this.loginTime()
+			// this.$router.push('/login')
+		}
 	},
 	methods: {
 		loginTime () {
@@ -49,7 +52,10 @@ export default {
 							showClose: true,
 							duration: 3000,
 							onClose: () => {
-								// this.$router.push('/login')
+								window.localStorage.removeItem('token')
+								window.localStorage.removeItem('info')
+								window.location.reload()
+								this.$router.push('/login')
 							}
 						})
 					}

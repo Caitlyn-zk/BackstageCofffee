@@ -36,7 +36,7 @@
 					label="图片"
 					width="">
 					<template scope="scope">
-						<img :src="api + scope.row.imgpic" width="60" height="60" class="head_pic"/>
+						<img :src=" api + scope.row.img[0]" width="60" height="60" class="head_pic"/>
 					</template>
 				</el-table-column>
 				<el-table-column
@@ -195,6 +195,9 @@
 		<!-- 修改商品弹框 -->
 		<el-dialog title="编辑商品信息" append-to-body :visible.sync="dialogFormVisibledata">
 			<el-form name="from" :model="updataform" class="nps-dialogupdata">
+				<el-form-item label="ID" :label-width="formLabelWidth">
+					<el-input name="id" v-model="updataform.id" autocomplete="off"></el-input>
+				</el-form-item>
 				<el-form-item label="商品分类" :label-width="formLabelWidth">
 					<el-input name="classification" v-model="updataform.classification" autocomplete="off"></el-input>
 				</el-form-item>
@@ -207,9 +210,10 @@
 				<el-form-item label="商品详情描述" :label-width="formLabelWidth">
 					<el-input name="description" v-model="updataform.description" autocomplete="off"></el-input>
 				</el-form-item>
-				<!-- <el-form-item label="商品图片" :label-width="formLabelWidth" >
-					<el-input name="img" v-model="updataform.img" type="file" accept="image/*" autocomplete="off"></el-input>
-				</el-form-item> -->
+				<el-form-item label="商品图片" :label-width="formLabelWidth" >
+					<input name="img" accept="image/*"  type="file"  autocomplete="off"/>
+					<!-- <el-input name="img" type="file" accept="image/*" autocomplete="off"></el-input> -->
+				</el-form-item>
 				<el-form-item label="烘焙方式" :label-width="formLabelWidth">
 					<el-input name="bakingDescription" v-model="updataform.bakingDescription" autocomplete="off"></el-input>
 				</el-form-item>
@@ -261,7 +265,11 @@
 </template>
 
 <script>
-import {goodsRequest, addGoodsRequest, spliceGoodsRequest, updatecoffGoodsRequest, aromaGoodsRequest} from 'commonjs/Requestaxios'
+import {goodsRequest,
+ addGoodsRequest, 
+ spliceGoodsRequest, 
+ updatecoffGoodsRequest, 
+ aromaGoodsRequest} from 'commonjs/Requestaxios'
 var api = 'http://192.168.97.240:3000/'
 // import qs from 'qs'
 export default {
@@ -269,7 +277,7 @@ export default {
 		return {
 			tableData: [],
 			// 用于计算数据的长度
-			newsLength: 0,
+			// newsLength: 0,
 			// 默认的页码 初始页
 			currentPage: 1,
 			// 默认单页渲染数据的条数
@@ -280,7 +288,8 @@ export default {
 			dialogFormVisible: false,
 			dialogFormVisibledata: false,
 			form: {
-				classification: '1',
+				id: '',
+				classification: '2',
 				name: '咖啡',
 				title: '这里是描述',
 				description: '商品详情描述',
@@ -293,9 +302,9 @@ export default {
 				bitterness: '1',
 				alcohol: '1',
 				acidity: '2',
-				degreeofBaking: '3',
-				coffeeClassification: '3',
-				discountPrice: '3',
+				degreeofBaking: '1',
+				coffeeClassification: '1',
+				discountPrice: '1',
 				taste: '还可以',
 				capAmount: '6'
 			},
@@ -306,13 +315,14 @@ export default {
 	},
 	created () {
 		this.handleUserList()
+		console.log(this.tableData)
 		// console.log(this.form.options)
 		// console.log(item.placefOrigin)
 	},
 	watch: {
 		'$store.state.goodsRequest.tableData' () {
 			this.tableData = this.$store.state.goodsRequest.tableData
-			// console.log(this.tableData)
+			console.log(this.tableData)
 		},
 		'$store.state.goodsRequest.updataform' () {
 			this.updataform = this.$store.state.goodsRequest.updataform
@@ -372,7 +382,7 @@ export default {
 		},
 		handleCurrentChange: function (currentPage) {
 			this.currentPage = currentPage
-			// console.log(this.currentPage)// 点击第几页
+			console.log(this.currentPage)// 点击第几页
 		},
 		// 添加商品
 		addVisible () {
@@ -423,10 +433,9 @@ export default {
 					name: this.tableData.name
 				},
 				error: () => {
-					// this.loginLoading = false
-					// console.log(1232)
 				},
 				success: (res) => {
+					console.log(res.data)
 					if (res.status === 200) {
 						// 存入vuex中
 						this.$store.commit('changeGoods', res.data)
@@ -453,7 +462,7 @@ export default {
 		updataceffdata (index, row) {
 			this.dialogFormVisibledata = true
 			// let id = row[index].id
-			// console.log(row[index])
+			console.log(row[index])
 			this.$store.commit('updataceff', row[index])
 			aromaGoodsRequest({
 				data: {
@@ -464,19 +473,17 @@ export default {
 					// console.log(1232)
 				},
 				success: (res) => {
+					console.log(res.data)
 					if (res.status === 200) {
 						// 存入vuex中
 						// this.$store.commit('changeGoods', res.data)
-						// for (let item of res.data) {
-						// 	// console.log(item)
-						// 	// html+='<el-option label="'+item.fragrance+'" value="'+item.value+'"></el-option>'
-						// }
 						this.$message({
 							message: '数据返回成功',
 							showClose: true,
 							duration: 1000,
 							onClose: () => {
 								// console.log(res.data)
+								this.aromadata = res.data
 							}
 						})
 					} else {
@@ -498,8 +505,9 @@ export default {
 			// this.updataform = this.tableData
 			// console.log(this.updataform)
 			let updataCoffeeForm = document.querySelector('.nps-dialogupdata')
-	
+			console.log(updataCoffeeForm)
 			let updataCoffeeFormData = new FormData(updataCoffeeForm)
+			console.log(updataCoffeeFormData)
 			updataCoffeeFormData.set('se', 1)
 			updatecoffGoodsRequest({
 				data: updataCoffeeFormData,
