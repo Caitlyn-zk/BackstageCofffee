@@ -12,7 +12,7 @@
 				border
 				style="width: 100%">
 				<el-table-column
-					prop="id"
+					prop="cmachineproductsId"
 					label="id"
 					width="60">
 				</el-table-column>
@@ -98,14 +98,14 @@
 				<el-form-item label="咖啡机商品" :label-width="formLabelWidth">
 					<el-input name="npsCommodity" v-model="form.npsCommodity" autocomplete="off"></el-input>
 				</el-form-item>
-				<el-form-item label="商品详情描述" :label-width="formLabelWidth">
+				<!-- <el-form-item label="商品详情描述" :label-width="formLabelWidth">
 					<el-input name="description" v-model="form.description" autocomplete="off"></el-input>
-				</el-form-item>
+				</el-form-item> -->
 				<el-form-item label="咖啡机颜色" :label-width="formLabelWidth">
 					<el-input name="color" v-model="form.color" autocomplete="off"></el-input>
 				</el-form-item>
 				<el-form-item label="商品图片" :label-width="formLabelWidth">
-					<el-input name="img" v-model="form.img" type="file" accept="image/*" autocomplete="off"></el-input>
+					<el-input name="coffeeMachineimg" v-model="form.coffeeMachineimg" type="file" accept="image/*" autocomplete="off"></el-input>
 				</el-form-item>
 				<el-form-item label="价格" :label-width="formLabelWidth">
 					<el-input name="price" v-model="form.price" autocomplete="off"></el-input>
@@ -125,41 +125,44 @@
 			</el-form>
 			<div slot="footer" class="dialog-footer">
 				<el-button @click="dialogFormVisible = false">取 消</el-button>
-				<el-button type="primary" @click="addVisible">确 定</el-button>
+				<el-button type="primary" @click="addMachineVisble">确 定</el-button>
 			</div>
 		</el-dialog>
 		<!-- 修改商品弹框 -->
 		<el-dialog title="编辑商品信息" append-to-body :visible.sync="dialogFormVisibledata">
-			<el-form name="nps-dialogAdd" :model="form" class="nps-dialogAdd">
+			<el-form name="nps-dialogAdd" :model="updataform" class="nps-dialogupdata">
+				<el-form-item label="ID" :label-width="formLabelWidth">
+					<el-input name="cmachineproductsId" v-model="updataform.cmachineproductsId" readonly="readonly" autocomplete="off"></el-input>
+				</el-form-item>
 				<el-form-item label="商品名字" :label-width="formLabelWidth">
-					<el-input name="name" v-model="form.name" autocomplete="off"></el-input>
+					<el-input name="name" v-model="updataform.name" autocomplete="off"></el-input>
 				</el-form-item>
 				<el-form-item label="咖啡机商品" :label-width="formLabelWidth">
-					<el-input name="npsCommodity" v-model="form.npsCommodity" autocomplete="off"></el-input>
+					<el-input name="npsCommodity" v-model="updataform.npsCommodity" autocomplete="off"></el-input>
 				</el-form-item>
-				<el-form-item label="商品详情描述" :label-width="formLabelWidth">
+				<!-- <el-form-item label="商品详情描述" :label-width="formLabelWidth">
 					<el-input name="description" v-model="form.description" autocomplete="off"></el-input>
-				</el-form-item>
+				</el-form-item> -->
 				<el-form-item label="咖啡机颜色" :label-width="formLabelWidth">
-					<el-input name="color" v-model="form.color" autocomplete="off"></el-input>
+					<el-input name="color" v-model="updataform.color" autocomplete="off"></el-input>
 				</el-form-item>
 				<el-form-item label="商品图片" :label-width="formLabelWidth">
-					<el-input name="img" v-model="form.img" type="file" accept="image/*" autocomplete="off"></el-input>
+					<input name="coffeeMachineimg" accept="image/*"  type="file"  autocomplete="off"/>
 				</el-form-item>
 				<el-form-item label="价格" :label-width="formLabelWidth">
-					<el-input name="price" v-model="form.price" autocomplete="off"></el-input>
+					<el-input name="price" v-model="updataform.price" autocomplete="off"></el-input>
 				</el-form-item>
 				<el-form-item label="优惠" :label-width="formLabelWidth">
-					<el-input name="discountPrice" v-model="form.discountPrice" autocomplete="off"></el-input>
+					<el-input name="discountPrice" v-model="updataform.discountPrice" autocomplete="off"></el-input>
 				</el-form-item>
 				<el-form-item label="规格" :label-width="formLabelWidth">
-					<el-input name="specifications" v-model="form.specifications" autocomplete="off"></el-input>
+					<el-input name="specifications" v-model="updataform.specifications" autocomplete="off"></el-input>
 				</el-form-item>
 				<el-form-item label="咖啡机类" :label-width="formLabelWidth">
-					<el-input name="cmachineclass" v-model="form.cmachineclass" autocomplete="off"></el-input>
+					<el-input name="cmachineclass" v-model="updataform.cmachineclass" autocomplete="off"></el-input>
 				</el-form-item>
 				<el-form-item label="说明书" :label-width="formLabelWidth">
-					<el-input name="manual" v-model="form.manual" autocomplete="off"></el-input>
+					<el-input name="manual" v-model="updataform.manual" autocomplete="off"></el-input>
 				</el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
@@ -171,7 +174,7 @@
 </template>
 
 <script>
-import {Coffeemachine} from 'commonjs/Requestaxios'
+import {Coffeemachine, addMachineRequest, deleteCoffeemachine, updatecoffMachineRequest} from 'commonjs/Requestaxios'
 var api = 'http://192.168.97.240:3000/'
 // import qs from 'qs'
 export default {
@@ -191,34 +194,33 @@ export default {
 			dialogFormVisibledata: false,
 			form: {
 				name: '咖啡机名',
-				npsCommodity: '咖啡机商品',
-				description: '商品详情描述',
-				color: '颜色',
+				npsCommodity: '1',
+				color: '1-8',
 				price: '102.2',
-				img: '',
+				coffeeMachineimg: '',
 				discountPrice: '132',
 				specifications: '1',
 				manual: '书明书链接',
 				cmachineclass: '1'
 			},
 			aromadata: [],
-			updataform: {},
+			updataform: {}, // 存放修改商品的
 			formLabelWidth: '120px'
 		}
 	},
 	created () {
-		this.handleUserList()
+		this.Coffeemachinegoods()
 		console.log(this.tableDataroducts)
 		// console.log(this.form.options)
 		// console.log(item.placefOrigin)
 	},
 	watch: {
-		'$store.state.coffee.tableDataroducts' () {
-			this.tableDataroducts = this.$store.state.goodsRequest.tableDataroducts
-			console.log(this.$store.state)
+		'$store.state.coffeeMachine.tableDataroducts' () {
+			this.tableDataroducts = this.$store.state.coffeeMachine.tableDataroducts
+			console.log(this.tableDataroducts)
 		},
-		'$store.state.goodsRequest.updataform' () {
-			this.updataform = this.$store.state.goodsRequest.updataform
+		'$store.state.coffeeMachine.updataform' () {
+			this.updataform = this.$store.state.coffeeMachine.updataform
 			// console.log(this.tableDataroducts)
 			// this.updataform.img
 		}
@@ -226,17 +228,11 @@ export default {
 	methods: {
 		// 删除行
 		handleClick (index, row) {
-			row.splice(index, 1)
-			// console.log(this.tableDataroducts)
-			let tableid = null
-			for (let prop in this.tableDataroducts) {
-				tableid = this.tableDataroducts[prop]
-				// console.log(tableid.id)
-			}
-			// console.log(this.tableDataroducts.id)
-			spliceGoodsRequest({
+			let tableid = row[index].cmachineproductsId
+			console.log(row[index].cmachineproductsId)
+			deleteCoffeemachine({
 				data: {
-					id: tableid.id
+					id: tableid
 				},
 				error: () => {
 					this.$message({
@@ -245,15 +241,14 @@ export default {
 				},
 				success: (res) => {
 					if (res.status === 200) {
-						// 存入vuex中
-						// this.$store.commit('changeAddGoods', res.data)
 						this.$message({
 							message: '删除成功！',
 							showClose: true,
-							duration: 1000,
+							duration: 2000,
 							onClose: () => {
+								// this.tableData.splice(index, 1)
 								row.splice(index, 1)
-								this.handleUserList()
+								this.Coffeemachinegoods()
 							}
 						})
 					} else {
@@ -276,16 +271,17 @@ export default {
 			this.currentPage = currentPage
 			console.log(this.currentPage)// 点击第几页
 		},
-		// 添加商品
-		addVisible () {
+		// 添加咖啡机
+		addMachineVisble () {
 			this.dialogFormVisible = false
 			// ajax封装的使用
 			// 存入vuex中
 			console.log(this.form)
 			let addCoffeeCapForm = document.querySelector('.nps-dialogAdd')
+			console.log(addCoffeeCapForm)
 			let addCoffeeCapFormData = new FormData(addCoffeeCapForm)
 			addCoffeeCapFormData.append('se', 1)
-			addGoodsRequest({
+			addMachineRequest({
 				data: addCoffeeCapFormData,
 				error: () => {
 					this.$message({
@@ -301,7 +297,7 @@ export default {
 							showClose: true,
 							duration: 1000,
 							onClose: () => {
-								this.handleUserList()
+								this.Coffeemachinegoods()
 							}
 						})
 					} else {
@@ -316,7 +312,7 @@ export default {
 			})
 		},
 		// 请求商品渲染
-		handleUserList () {
+		Coffeemachinegoods () {
 			// ajax封装的使用
 			// 请求表的数据
 			Coffeemachine({
@@ -328,9 +324,11 @@ export default {
 				},
 				success: (res) => {
 					console.log(res)
+					console.log(res.data)
+					
 					if (res.status === 200) {
 						// 存入vuex中
-						this.$store.commit('changeGoods', res.data)
+						this.$store.commit('coffeeMachine', res.data)
 						this.$message({
 							message: '数据返回成功',
 							showClose: true,
@@ -353,41 +351,8 @@ export default {
 		// 修改按钮
 		updataceffdata (index, row) {
 			this.dialogFormVisibledata = true
-			// let id = row[index].id
 			console.log(row[index])
 			this.$store.commit('updataceff', row[index])
-			aromaGoodsRequest({
-				data: {
-					id: this.tableDataroducts.id
-				},
-				error: () => {
-					// this.loginLoading = false
-					// console.log(1232)
-				},
-				success: (res) => {
-					console.log(res.data)
-					if (res.status === 200) {
-						// 存入vuex中
-						// this.$store.commit('changeGoods', res.data)
-						this.$message({
-							message: '数据返回成功',
-							showClose: true,
-							duration: 1000,
-							onClose: () => {
-								// console.log(res.data)
-								this.aromadata = res.data
-							}
-						})
-					} else {
-						this.$message({
-							message: res.message,
-							type: 'error',
-							showClose: true,
-							duration: 3000
-						})
-					}
-				}
-			})
 		},
 		// 修改商品
 		updatecoffCap () {
@@ -401,7 +366,7 @@ export default {
 			let updataCoffeeFormData = new FormData(updataCoffeeForm)
 			console.log(updataCoffeeFormData)
 			updataCoffeeFormData.set('se', 1)
-			updatecoffGoodsRequest({
+			updatecoffMachineRequest({
 				data: updataCoffeeFormData,
 				error: () => {
 					this.$message({

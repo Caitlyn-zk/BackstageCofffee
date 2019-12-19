@@ -8,7 +8,7 @@
 					<a href="javascript:;">发布商品</a>
 					<dl class="layui-nav-child">
 						<dd><router-link to="/bodyindex">咖啡胶囊</router-link></dd>
-						<dd><router-link to="coffee">咖啡机</router-link></dd>
+						<dd><router-link to="/coffeeMachine">咖啡机</router-link></dd>
 						<dd><a href="">超链接</a></dd>
 					</dl>
 				</li>

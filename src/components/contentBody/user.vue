@@ -38,11 +38,11 @@
 					label="语言"
 					width="120">
 				</el-table-column>
-				<el-table-column
+				<!-- <el-table-column
 				prop="distributeclass"
 				label="分布类"
 				width="100">
-				</el-table-column>
+				</el-table-column> -->
 				<el-table-column
 				prop="deliveryAddress"
 				label="分布类"
@@ -87,7 +87,7 @@
 						</el-table-column>
 						<el-table-column
 						prop="subscription"
-						label="啥"
+						label="订阅"
 						width="100">
 						</el-table-column>
 					</el-table-column>
@@ -98,16 +98,24 @@
 					width="120">
 					<template slot-scope="scope">
 						<el-button
-							@click.native.prevent="deleteRow(scope.$index, tableData)"
+							@click.native.prevent="deleteRow(scope.$index, userTableData)"
 							type="text"
 							size="small">
 							移除
 						</el-button>
-						<el-button type="text" size="small">查看</el-button>
+						<el-button type="text" size="small" @click.native.prevent="Lookover(scope.$index, userTableData)">查看</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
 		</div>
+		<el-dialog append-to-body title="外层 Dialog" :visible.sync="outerVisible">
+			<el-row :gutter="10" :key="datalist" v-for="(item, datalist) in tableList">
+				<el-col :md="8">{{datalist}}:{{item}}</el-col>
+			</el-row>
+			<div slot="footer" class="dialog-footer">
+				<el-button @click="outerVisible = false">关闭</el-button>
+			</div>
+		</el-dialog>
 	</div>
 </template>
 
@@ -116,7 +124,10 @@ import {UserRequest} from 'commonjs/Requestaxios'
 export default {
 	data () {
 		return {
-			userTableData: []
+			outerVisible: false,
+			userTableData: [],
+			// 存放查看的内容
+			tableList: []
 		}
 	},
 	created () {
@@ -162,6 +173,14 @@ export default {
 					}
 				}
 			})
+		},
+		Lookover (index, row) {
+			this.outerVisible = true
+			// let aa = row[index]
+			// console.log(aa)
+			// this.tableList = JSON.parse(aa)
+			this.tableList = row[index]
+			console.log(this.tableList)
 		}
 	}
 }
@@ -169,4 +188,20 @@ export default {
 
 <style lang='less'>
 @import './css/index.less';
+.el-col {
+	border-radius: 4px;
+}
+.bg-purple-dark {
+	background: #99a9bf;
+}
+.bg-purple {
+	background: #d3dce6;
+}
+.bg-purple-light {
+	background: #e5e9f2;
+}
+.grid-content {
+	border-radius: 4px;
+	min-height: 36px;
+}
 </style>

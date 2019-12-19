@@ -196,7 +196,7 @@
 		<el-dialog title="编辑商品信息" append-to-body :visible.sync="dialogFormVisibledata">
 			<el-form name="from" :model="updataform" class="nps-dialogupdata">
 				<el-form-item label="ID" :label-width="formLabelWidth">
-					<el-input name="id" v-model="updataform.id" autocomplete="off"></el-input>
+					<el-input name="id" v-model="updataform.id" readonly="readonly" autocomplete="off"></el-input>
 				</el-form-item>
 				<el-form-item label="商品分类" :label-width="formLabelWidth">
 					<el-input name="classification" v-model="updataform.classification" autocomplete="off"></el-input>
@@ -333,17 +333,14 @@ export default {
 	methods: {
 		// 删除行
 		handleClick (index, row) {
-			row.splice(index, 1)
+			// row.splice(index, 1)
+			console.log(index)
+			let tableid = row[index].id
 			// console.log(this.tableData)
-			let tableid = null
-			for (let prop in this.tableData) {
-				tableid = this.tableData[prop]
-				// console.log(tableid.id)
-			}
-			// console.log(this.tableData.id)
+			console.log(row[index].id)
 			spliceGoodsRequest({
 				data: {
-					id: tableid.id
+					id: tableid
 				},
 				error: () => {
 					this.$message({

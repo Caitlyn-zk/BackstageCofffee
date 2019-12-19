@@ -6,7 +6,7 @@ import Retrieveps from 'components/Login/retrieveps'
 import User from 'components/contentBody/user'
 import Home from 'components/contentBody/home'
 import bodyIndex from 'components/contentBody/index'
-import Coffee from 'components/contentBody/coffee'
+import coffeeMachine from 'components/contentBody/coffeeMachine'
 
 Vue.use(Router)
 
@@ -36,8 +36,8 @@ export default new Router({
 						requireUser: true
 					}
 				}, {
-					path: 'coffee',
-					component: Coffee,
+					path: 'coffeeMachine',
+					component: coffeeMachine,
 					meta: {
 						requireUser: true
 					}

@@ -107,6 +107,37 @@ let Coffeemachine = (params) => {
 		params.error(error)
 	})
 }
+// 添加咖啡机
+let addMachineRequest = (params) => {
+	axiosRequest('addCoffeeMachine', 'post', params.data, {
+		headers: { 'Content-Type': 'multipart/form-data' }
+	}).then(function (res) {
+		params.success(res)
+		console.log(res)
+		console.log('res: ', res)
+	}).catch((error) => {
+		console.log(error)
+		params.error(error)
+	})
+}
+// 删除咖啡机
+let deleteCoffeemachine = (params) => {
+	axiosRequest('deleteCoffeeMachine', 'post', params.data).then(function (res) {
+		params.success(res)
+	}).catch((error) => {
+		params.error(error)
+	})
+}
+// 修改咖啡机
+let updatecoffMachineRequest = (params) => {
+	axiosRequest('updateCoffeeMachine', 'post', params.data, {
+		headers: { 'Content-Type': 'multipart/form-data' }
+	}).then(function (res) {
+		params.success(res)
+	}).catch((error) => {
+		params.error(error)
+	})
+}
 export {
 	loginRequest,
 	codeRequest,
@@ -118,5 +149,8 @@ export {
 	updatecoffGoodsRequest,
 	aromaGoodsRequest,
 	UserRequest,
-	Coffeemachine
+	Coffeemachine,
+	addMachineRequest,
+	deleteCoffeemachine,
+	updatecoffMachineRequest
 }

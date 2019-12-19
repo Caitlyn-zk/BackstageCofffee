@@ -6,8 +6,9 @@ let state = {
 let mutations = {
 	// 渲染咖啡机表
 	coffeeMachine(state, data) {
+		console.log(data)
 		for (let prop in data) {
-			// console.log(data[prop].img)
+			console.log(data[prop].img)
 			data[prop].img = JSON.parse(data[prop].img)
 		}
 		// data.map((item) => {
@@ -19,6 +20,11 @@ let mutations = {
 		// })
 		state.tableDataroducts = data
 		console.log(state.tableDataroducts)
+	},
+	// 修改商品
+	updataceff(state, data) {
+		// data.img = data.img[0] || ''
+		state.updataform = data
 	},
 }
 export default {
