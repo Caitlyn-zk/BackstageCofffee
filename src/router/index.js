@@ -70,10 +70,3 @@ export default new Router({
 		}
   ]
 })
-// {
-// 	path: 'home',
-// 		component: Home,
-// 			meta: {
-// 		requireUser: false
-// 	}
-// },

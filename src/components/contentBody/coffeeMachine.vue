@@ -382,7 +382,8 @@ export default {
 							showClose: true,
 							duration: 1000,
 							onClose: () => {
-								this.handleUserList()
+								this.dialogFormVisibledata = false
+								this.Coffeemachinegoods()
 							}
 						})
 					} else {
