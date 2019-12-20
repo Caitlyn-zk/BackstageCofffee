@@ -24,7 +24,7 @@
 					{{name}}
 				</a>
 				<dl class="layui-nav-child">
-					<dd><a href="">基本资料</a></dd>
+					<dd><router-link to="/material">基本资料</router-link></dd>
 					<dd><a href="">安全设置</a></dd>
 				</dl>
 			</li>

@@ -7,6 +7,7 @@ import User from 'components/contentBody/user'
 import Home from 'components/contentBody/home'
 import bodyIndex from 'components/contentBody/index'
 import coffeeMachine from 'components/contentBody/coffeeMachine'
+import Material from 'components/contentBody/material'
 
 Vue.use(Router)
 
@@ -38,6 +39,12 @@ export default new Router({
 				}, {
 					path: 'coffeeMachine',
 					component: coffeeMachine,
+					meta: {
+						requireUser: true
+					}
+				}, {
+					path: 'material',
+					component: Material,
 					meta: {
 						requireUser: true
 					}

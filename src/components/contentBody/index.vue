@@ -12,6 +12,7 @@
 				border
 				style="width: 100%">
 				<el-table-column
+					fixed
 					prop="id"
 					label="id"
 					width="60">
@@ -315,14 +316,14 @@ export default {
 	},
 	created () {
 		this.handleUserList()
-		console.log(this.tableData)
+		// console.log(this.tableData)
 		// console.log(this.form.options)
 		// console.log(item.placefOrigin)
 	},
 	watch: {
 		'$store.state.goodsRequest.tableData' () {
 			this.tableData = this.$store.state.goodsRequest.tableData
-			console.log(this.tableData)
+			// console.log(this.tableData)
 		},
 		'$store.state.goodsRequest.updataform' () {
 			this.updataform = this.$store.state.goodsRequest.updataform
@@ -334,7 +335,7 @@ export default {
 		// 删除行
 		handleClick (index, row) {
 			// row.splice(index, 1)
-			console.log(index)
+			// console.log(index)
 			let tableid = row[index].id
 			// console.log(this.tableData)
 			console.log(row[index].id)
@@ -432,7 +433,7 @@ export default {
 				error: () => {
 				},
 				success: (res) => {
-					console.log(res.data)
+					// console.log(res.data)
 					if (res.status === 200) {
 						// 存入vuex中
 						this.$store.commit('changeGoods', res.data)
@@ -459,7 +460,7 @@ export default {
 		updataceffdata (index, row) {
 			this.dialogFormVisibledata = true
 			// let id = row[index].id
-			console.log(row[index])
+			// console.log(row[index])
 			this.$store.commit('updataceff', row[index])
 			aromaGoodsRequest({
 				data: {
@@ -539,6 +540,7 @@ export default {
 	}
 }
 </script>
+
 <style lang='less'>
 @import './css/index.less';
 </style>

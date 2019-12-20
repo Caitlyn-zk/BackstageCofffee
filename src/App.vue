@@ -17,7 +17,7 @@ export default {
 	},
 	created () {
 		let tokenlong = window.localStorage.getItem('token')
-		console.log(tokenlong)
+		// console.log(tokenlong)
 		if (tokenlong !== null) {
 			this.loginTime()
 			// this.$router.push('/login')
