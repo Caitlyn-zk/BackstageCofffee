@@ -26,7 +26,7 @@ export default {
 <style lang="less">
 .nps-home {
 	position: absolute;
-	padding: 15px 0px 15px 215px;
+	padding: 15px 20px 15px 215px;
 	width: 100%;
 	height: 80%;
 	z-index: 1;

@@ -524,6 +524,7 @@ export default {
 							duration: 1000,
 							onClose: () => {
 								this.handleUserList()
+								this.dialogFormVisible = false
 							}
 						})
 					} else {

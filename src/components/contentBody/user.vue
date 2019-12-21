@@ -6,7 +6,7 @@
 		<div>
 			<el-table
 			:data="userTableData"
-			max-height="850"
+			max-height="700"
 			style="width: 100%">
 				<el-table-column
 				prop="id"

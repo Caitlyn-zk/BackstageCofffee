@@ -1,7 +1,8 @@
 let state = {
 	tableData: [],
 	updataform: {},
-	userTableData: []
+	userTableData: [],
+	UserList: []
 }
 let mutations = {
 	// 渲染咖啡胶囊表
@@ -29,6 +30,17 @@ let mutations = {
 	// 用户信息渲染
 	UserListdata (state, data) {
 		state.userTableData = data
+	},
+	// 渲染info表
+	changeUserInfo(state, data) {
+		data.map((item) => {
+			// console.log(item.img)
+			// 对象转数组
+			item.img = JSON.parse(item.img)
+			item.imgpic = item.img[0] || ''
+		})
+		state.UserList = data
+		// console.log(state.tableData)
 	}
 }
 export default {

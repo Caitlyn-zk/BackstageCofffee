@@ -9,12 +9,12 @@
 					<dl class="layui-nav-child">
 						<dd><router-link to="/bodyindex">咖啡胶囊</router-link></dd>
 						<dd><router-link to="/coffeeMachine">咖啡机</router-link></dd>
-						<dd><a href="">超链接</a></dd>
+						<dd><router-link to="/shippingCart">购物车</router-link></dd>
+						<dd><router-link to="/orderList">订单表</router-link></dd>
 					</dl>
 				</li>
 				<li class="layui-nav-item"><router-link to="/user">买家地址</router-link></li>
-				<li class="layui-nav-item"><router-link to="/">注册报表</router-link></li>
-				<li class="layui-nav-item"><router-link to="/">用户信息</router-link></li>
+				<li class="layui-nav-item"><router-link to="/quserlist">用户信息</router-link></li>
 					<li class="layui-nav-item layui-nav-itemed">
 					<a class="" href="javascript:;">系统管理</a>
 					<dl class="layui-nav-child">

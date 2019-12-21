@@ -36,7 +36,7 @@
 					label="图片"
 					width="">
 					<template scope="scope">
-						<img :src=" api + scope.row.img[0]" width="60" height="60" class="head_pic"/>
+						<img :src=" api + scope.row.cMachineImg[0]" width="60" height="60" class="head_pic"/>
 					</template>
 				</el-table-column>
 				<el-table-column
@@ -323,6 +323,7 @@ export default {
 				error: () => {
 				},
 				success: (res) => {
+					console.log(1213414)
 					console.log(res)
 					console.log(res.data)
 					

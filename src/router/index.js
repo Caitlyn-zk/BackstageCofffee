@@ -8,6 +8,9 @@ import Home from 'components/contentBody/home'
 import bodyIndex from 'components/contentBody/index'
 import coffeeMachine from 'components/contentBody/coffeeMachine'
 import Material from 'components/contentBody/material'
+import Quserlist from 'components/contentBody/quserlist'
+import ShippingCart from 'components/contentBody/shoppingCart'
+import OrderList from 'components/contentBody/OrderList'
 
 Vue.use(Router)
 
@@ -45,6 +48,24 @@ export default new Router({
 				}, {
 					path: 'material',
 					component: Material,
+					meta: {
+						requireUser: true
+					}
+				}, {
+					path: 'quserlist',
+					component: Quserlist,
+					meta: {
+						requireUser: true
+					}
+				}, {
+					path: 'shippingCart',
+					component: ShippingCart,
+					meta: {
+						requireUser: true
+					}
+				} , {
+					path: 'orderList',
+					component: OrderList,
 					meta: {
 						requireUser: true
 					}

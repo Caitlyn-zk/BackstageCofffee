@@ -8,8 +8,8 @@ let mutations = {
 	coffeeMachine(state, data) {
 		console.log(data)
 		for (let prop in data) {
-			console.log(data[prop].img)
-			data[prop].img = JSON.parse(data[prop].img)
+			// console.log(data[prop].cMachineImg)
+			data[prop].cMachineImg = JSON.parse(data[prop].cMachineImg)
 		}
 		// data.map((item) => {
 		// 	// console.log(item.img)

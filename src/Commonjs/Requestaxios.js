@@ -138,6 +138,31 @@ let updatecoffMachineRequest = (params) => {
 		params.error(error)
 	})
 }
+// 购物车表
+let ShippingCartlist = (params) => {
+	axiosRequest('getCartList', 'post', params.data).then(function (res) {
+		params.success(res)
+	}).catch((error) => {
+		params.error(error)
+	})
+}
+// 用户信息表info
+let UserInofRequest = (params) => {
+	axiosRequest('getinfor', 'post', params.data).then(function (res) {
+		params.success(res)
+	}).catch((error) => {
+		params.error(error)
+	})
+}
+// 用订单表
+let getOrderListRequest = (params) => {
+	axiosRequest('getOrderList', 'post', params.data).then(function (res) {
+		params.success(res)
+	}).catch((error) => {
+		params.error(error)
+	})
+}
+
 export {
 	loginRequest,
 	codeRequest,
@@ -152,5 +177,8 @@ export {
 	Coffeemachine,
 	addMachineRequest,
 	deleteCoffeemachine,
-	updatecoffMachineRequest
+	updatecoffMachineRequest,
+	ShippingCartlist,
+	UserInofRequest,
+	getOrderListRequest
 }
