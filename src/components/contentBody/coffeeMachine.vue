@@ -57,7 +57,7 @@
 				<el-table-column
 					prop="manual"
 					label="说明书链接"
-					width="80">
+					width="220">
 				</el-table-column>
 				<el-table-column
 					prop="cmachineclass"

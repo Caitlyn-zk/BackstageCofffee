@@ -25,7 +25,7 @@
 				</div>
 				<div class="layui-form-item">
 					<div class="layui-input-block">
-						<a class="layui-btn" type="button" :loading="loginLoading" lay-submit @click="formlogin" lay-filter="formDemo">立即提交</a>
+						<a class="layui-btn" type="button" :loading="loginLoading" lay-submit @click.native.prevent="formlogin" lay-filter="formDemo">立即提交</a>
 					</div>
 				</div>
 			</form>
@@ -49,6 +49,9 @@ import {loginRequest} from 'commonjs/Requestaxios'
 		}
 	},
 	created () {
+	},
+	mounted () {
+		this.formlogin()
 	},
 	methods: {
 		formlogin (formname) {

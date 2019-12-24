@@ -25,7 +25,7 @@
 				<el-table-column
 					prop="name"
 					label="商品姓名"
-					width="100">
+					width="180">
 				</el-table-column>
 				<el-table-column
 					prop="title"
@@ -48,7 +48,7 @@
 				<el-table-column
 					prop="placefOrigin"
 					label="原产地"
-					width="80">
+					width="200">
 				</el-table-column>
 				<el-table-column
 					prop="strength"
@@ -516,6 +516,7 @@ export default {
 				},
 				success: (res) => {
 					if (res.status === 200) {
+						this.dialogFormVisibledata = false
 						// 存入vuex中
 						// this.$store.commit('changeAddGoods', res.data)
 						this.$message({

@@ -32,7 +32,7 @@
 				</div>
 				<div class="layui-form-item">
 					<div class="layui-input-block">
-						<a class="layui-btn" @click="formRetrieveps(loginForm)" :loading="loginLoading" lay-submit lay-filter="formDemo">立即提交</a>
+						<a class="layui-btn" @click="formRetrieveps(loginForm)" :loading="loginLoading" lay-submit lay-filter="formDemo">提交返回登录</a>
 					</div>
 				</div>
 			</form>
@@ -52,6 +52,9 @@ import {codeRequest, retrieveRequest} from 'commonjs/Requestaxios'
 				code: ''
 			}
 		}
+	},
+	mounted () {
+		this.formRetrieveps()
 	},
 	methods: {
 		// 倒计时
